@@ -44,13 +44,14 @@ public class Main extends Application
                 DaoManager.createDao(connectionSource, Usterka.class);
 
 
-
-//            TableUtils.createTable(connectionSource, Klient.class);
-//            TableUtils.createTable(connectionSource, Samochod.class);
-//            TableUtils.createTable(connectionSource, Usterka.class);
+        TableUtils.dropTable(connectionSource, Klient.class, true);
+        TableUtils.dropTable(connectionSource, Samochod.class, true);
+        TableUtils.dropTable(connectionSource, Usterka.class, true);
+        TableUtils.createTableIfNotExists(connectionSource, Klient.class);
+        TableUtils.createTableIfNotExists(connectionSource, Samochod.class);
+        TableUtils.createTableIfNotExists(connectionSource, Usterka.class);
 
         launch(args);
-
 // close the connection source
         connectionSource.close();
     }

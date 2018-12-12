@@ -6,6 +6,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import java.awt.event.ActionEvent;
+
 public class GlownaController {
 
     @FXML
@@ -94,5 +96,12 @@ public class GlownaController {
 
     @FXML
     private TextField txt_imie;
+
+    //metody
+
+    @FXML
+    void dodajKlient(ActionEvent event) {
+
+    }
 
 }

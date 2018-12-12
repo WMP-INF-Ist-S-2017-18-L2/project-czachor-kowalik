@@ -1,4 +1,7 @@
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 
 
@@ -63,9 +66,27 @@ public class Klient {
     }
 
 
-
     public Klient() {
 
+
     }
+
+
+    Klient obiektKlient = new Klient();
+
+    public void ustawKlient(String imie, String nazwisko, String adres, int telefon, int id_klient){
+        obiektKlient.imie = imie;
+        obiektKlient.nazwisko = nazwisko;
+        obiektKlient.adres = adres;
+        obiektKlient.telefon = telefon;
+        obiektKlient.id_klient = id_klient;
+    }
+
+    public void dodajKlient (String imie, String nazwisko, String adres, int telefon, int id_klient){
+        ustawKlient(imie,nazwisko,adres, telefon, id_klient);
+
+    }
+
+
 
 }

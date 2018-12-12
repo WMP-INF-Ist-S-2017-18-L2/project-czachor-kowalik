@@ -78,7 +78,7 @@
                                                                         </TextField>
                                                                         <HBox prefHeight="100.0" prefWidth="200.0">
                                                                             <children>
-                                                                                <Button fx:id="but_dodaj_klient" mnemonicParsing="false" text="Dodaj">
+                                                                                <Button fx:id="but_dodaj_klient" mnemonicParsing="false" onAction="#dodajKlient" text="Dodaj">
                                                                                     <HBox.margin>
                                                                                         <Insets />
                                                                                     </HBox.margin>
