@@ -1,19 +1,12 @@
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.TableUtils;
+import Utils.DbManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-
-import static javafx.application.Application.launch;
 
 public class Main extends Application
 {
@@ -29,30 +22,13 @@ public class Main extends Application
     }
 
     public static void main(String[] args) throws SQLException, IOException {
-// this uses h2 but you can change it to match your database
-        String databaseUrl = "jdbc:sqlite:bazadanych.db";
-// create a connection source to our database
-        ConnectionSource connectionSource;
-        connectionSource = new JdbcConnectionSource(databaseUrl);
-
-// instantiate the DAO to handle Account with String id
-        Dao<Klient, Integer> klientDao =
-                DaoManager.createDao(connectionSource, Klient.class);
-        Dao<Samochod,Integer> samochodDao =
-                DaoManager.createDao(connectionSource, Samochod.class);
-        Dao<Usterka,Integer> usterkaDao =
-                DaoManager.createDao(connectionSource, Usterka.class);
+        DbManager.initDatabase();
 
 
-        TableUtils.dropTable(connectionSource, Klient.class, true);
-        TableUtils.dropTable(connectionSource, Samochod.class, true);
-        TableUtils.dropTable(connectionSource, Usterka.class, true);
-        TableUtils.createTableIfNotExists(connectionSource, Klient.class);
-        TableUtils.createTableIfNotExists(connectionSource, Samochod.class);
-        TableUtils.createTableIfNotExists(connectionSource, Usterka.class);
+
 
         launch(args);
-// close the connection source
-        connectionSource.close();
+
+
     }
 }

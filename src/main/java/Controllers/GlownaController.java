@@ -1,9 +1,7 @@
+package Controllers;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
 import java.awt.event.ActionEvent;
@@ -96,6 +94,7 @@ public class GlownaController {
 
     @FXML
     private TextField txt_imie;
+
 
     //metody
 

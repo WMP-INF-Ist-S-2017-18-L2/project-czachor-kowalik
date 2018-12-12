@@ -1,7 +1,15 @@
+package Model;
+
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "Samochod")
+import java.sql.SQLException;
+
+import static Utils.DbManager.getConnectSource;
+
+@DatabaseTable(tableName = "Model.Samochod")
 public class Samochod {
 
     @DatabaseField(canBeNull = false)
@@ -24,7 +32,6 @@ public class Samochod {
 
     @DatabaseField(canBeNull = false, foreign = true)
     private Klient id_klient;
-
 
 
     public String getMarka() {
@@ -83,7 +90,10 @@ public class Samochod {
         this.id_klient = id_klient;
     }
 
-    public Samochod() {
+    public Samochod() throws SQLException {
 
     }
+
+    Dao<Samochod, Integer> samochodDao =
+            DaoManager.createDao(getConnectSource(), Samochod.class);
 }

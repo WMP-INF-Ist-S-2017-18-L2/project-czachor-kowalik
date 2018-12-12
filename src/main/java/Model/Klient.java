@@ -1,11 +1,16 @@
+package Model;
+
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.sql.SQLException;
 
-@DatabaseTable(tableName = "Klient")
+import static Utils.DbManager.getConnectSource;
+
+
+@DatabaseTable(tableName = "Model.Klient")
 public class Klient {
 
     @DatabaseField(canBeNull = false)
@@ -22,7 +27,6 @@ public class Klient {
 
     @DatabaseField(canBeNull = false, generatedId=true, unique = true)
     private int id_klient;
-
 
 
     public String getImie() {
@@ -66,10 +70,13 @@ public class Klient {
     }
 
 
-    public Klient() {
+    public Klient() throws SQLException {
 
 
     }
+
+    Dao<Klient, Integer> klientDao =
+            DaoManager.createDao(getConnectSource(), Klient.class);
 
 
     Klient obiektKlient = new Klient();
@@ -86,7 +93,6 @@ public class Klient {
         ustawKlient(imie,nazwisko,adres, telefon, id_klient);
 
     }
-
 
 
 }

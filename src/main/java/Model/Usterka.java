@@ -1,12 +1,17 @@
-import com.j256.ormlite.field.DataType;
+package Model;
+
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.types.LongStringType;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.sql.SQLException;
 import java.util.Date;
 
+import static Utils.DbManager.getConnectSource;
 
-@DatabaseTable(tableName = "Usterka")
+
+@DatabaseTable(tableName = "Model.Usterka")
 public class Usterka {
 
     @DatabaseField(canBeNull = false )
@@ -86,7 +91,10 @@ public class Usterka {
         this.id_sam = id_sam;
     }
 
-    public Usterka(){
+    public Usterka() throws SQLException {
 
     }
+
+    Dao<Usterka, Integer> usterkaDao =
+            DaoManager.createDao(getConnectSource(), Usterka.class);
 }
