@@ -2,12 +2,14 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -20,8 +22,8 @@ public class Main extends Application
         Parent root = FXMLLoader.load(getClass().getResource("/Glowna.fxml"));
 
         Scene scene = new Scene(root);
-        stage.setMinHeight(600);
-        stage.setMinWidth(800);
+        stage.setMinHeight(700);
+        stage.setMinWidth(850);
         stage.setScene(scene);
         stage.show();
     }
@@ -34,21 +36,19 @@ public class Main extends Application
         connectionSource = new JdbcConnectionSource(databaseUrl);
 
 // instantiate the DAO to handle Account with String id
-        Dao<Klient, Integer> klientsDao =
+        Dao<Klient, Integer> klientDao =
                 DaoManager.createDao(connectionSource, Klient.class);
-        Dao<Samochod,Integer> samochodsDao =
+        Dao<Samochod,Integer> samochodDao =
                 DaoManager.createDao(connectionSource, Samochod.class);
-        Dao<Usterka,Integer> usterkasDao =
+        Dao<Usterka,Integer> usterkaDao =
                 DaoManager.createDao(connectionSource, Usterka.class);
 
 
-//        File baza = new File("/bazadanych.db");
-//        if(!baza.exists()) {}
-//        else {
+
 //            TableUtils.createTable(connectionSource, Klient.class);
 //            TableUtils.createTable(connectionSource, Samochod.class);
 //            TableUtils.createTable(connectionSource, Usterka.class);
-//        }
+
         launch(args);
 
 // close the connection source

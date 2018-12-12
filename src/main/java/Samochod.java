@@ -3,6 +3,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "Samochod")
 public class Samochod {
+
     @DatabaseField(canBeNull = false)
     private String marka;
 
@@ -21,8 +22,8 @@ public class Samochod {
     @DatabaseField(canBeNull = false, generatedId = true, unique = true)
     private int id_sam;
 
-    @DatabaseField(canBeNull = false)
-    private int id_klient;
+    @DatabaseField(canBeNull = false, foreign = true)
+    private Klient id_klient;
 
 
 
@@ -74,11 +75,11 @@ public class Samochod {
         this.id_sam = id_sam;
     }
 
-    public int getId_klient() {
+    public Klient getId_klient() {
         return id_klient;
     }
 
-    public void setId_klient(int id_klient) {
+    public void setId_klient(Klient id_klient) {
         this.id_klient = id_klient;
     }
 

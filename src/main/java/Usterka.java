@@ -21,14 +21,14 @@ public class Usterka {
     @DatabaseField(canBeNull = false)
     private int wycena;
 
-    @DatabaseField(canBeNull = true)
+    @DatabaseField()
     private String opis;
 
     @DatabaseField(canBeNull = false, generatedId = true, unique = true)
     private int id_usterki;
 
-    @DatabaseField(canBeNull = false)
-    private int id_sam;
+    @DatabaseField(canBeNull = false, foreign = true)
+    private Samochod id_sam;
 
     public Date getData() {
         return data;
@@ -78,11 +78,11 @@ public class Usterka {
         this.id_usterki = id_usterki;
     }
 
-    public int getId_sam() {
+    public Samochod getId_sam() {
         return id_sam;
     }
 
-    public void setId_sam(int id_sam) {
+    public void setId_sam(Samochod id_sam) {
         this.id_sam = id_sam;
     }
 
