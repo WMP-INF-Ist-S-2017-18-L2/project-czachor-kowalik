@@ -1,12 +1,20 @@
 package Controllers;
 
+import Model.Klient;
+import Utils.DbManager;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 
-import java.awt.event.ActionEvent;
+import javax.swing.*;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class GlownaController {
+public class GlownaController implements Initializable {
 
     @FXML
     private MenuItem status_wtrakcie;
@@ -95,13 +103,25 @@ public class GlownaController {
     @FXML
     private TextField txt_imie;
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
 
-    //metody
+        but_dodaj_klient.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    Klient k = new Klient();
+                    k.dodajKlient("Adam", "Nowak", "Kopisto", 1111, 88);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
-    @FXML
-    void addKlient(ActionEvent event) {
+            }
+        });
+
+
 
     }
 
 
-}
+    }

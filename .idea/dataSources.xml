@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="bazadanych" uuid="d98f5f22-e5d8-4547-b0a7-1bc2a7f409cf">
+    <data-source source="LOCAL" name="bazadanych.db" uuid="2882239f-0405-4973-863e-a7a2479c8001">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Kowali\Desktop\Warsztat\Warsztat\bazadanych.db</jdbc-url>
-      <driver-properties>
-        <property name="enable_load_extension" value="true" />
-      </driver-properties>
-    </data-source>
-    <data-source source="LOCAL" name="bazadanych [2]" uuid="108d658e-55a7-4472-aba1-5eb27a7f0773">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\Private\Warsztat\bazadanych.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/bazadanych.db</jdbc-url>
       <driver-properties>
         <property name="enable_load_extension" value="true" />
       </driver-properties>

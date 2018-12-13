@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import static Utils.DbManager.getConnectSource;
 
 
-@DatabaseTable(tableName = "Model.Klient")
+@DatabaseTable(tableName = "Klient")
 public class Klient {
 
     @DatabaseField(canBeNull = false)
@@ -27,6 +27,8 @@ public class Klient {
 
     @DatabaseField(canBeNull = false, generatedId=true, unique = true)
     private int id_klient;
+
+
 
 
     public String getImie() {
@@ -75,34 +77,49 @@ public class Klient {
 
     }
 
-    Dao<Klient, Integer> klientDao =
-            DaoManager.createDao(getConnectSource(), Klient.class);
+    Dao<Klient, Integer> klientDao;
+
+    {
+        try {
+            klientDao = DaoManager.createDao(getConnectSource(), Klient.class);
+        } catch (SQLException e) {e.printStackTrace();
+            e.printStackTrace();
+        }
+    }
 
 
-    Klient obiektKlient = new Klient();
+    //Klient obiektKlient = new Klient();
 
     public void ustawKlient(String imie, String nazwisko, String adres, int telefon, int id_klient){
-        obiektKlient.imie = imie;
-        obiektKlient.nazwisko = nazwisko;
-        obiektKlient.adres = adres;
-        obiektKlient.telefon = telefon;
-        obiektKlient.id_klient = id_klient;
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.adres = adres;
+        this.telefon = telefon;
+        this.id_klient = id_klient;
     }
 
     public void clearKlient() {
-        obiektKlient.imie = "";
-        obiektKlient.nazwisko = "";
-        obiektKlient.adres = "";
-        obiektKlient.telefon = 0;
-        obiektKlient.id_klient = 0;
+        this.imie = "";
+        this.nazwisko = "";
+        this.adres = "";
+        this.telefon = 0;
+        this.id_klient = 0;
     }
 
+    public Klient(String imie, String nazwisko, String adres, int telefon, int id_klient) {
+        this.imie = imie;
+        this.nazwisko = nazwisko;
+        this.adres = adres;
+        this.telefon = telefon;
+        this.id_klient = id_klient;
+    }
 
     public void dodajKlient(String imie, String nazwisko, String adres, int telefon, int id_klient) throws SQLException {
 
-        ustawKlient(imie,nazwisko,adres, telefon, id_klient);
-        klientDao.create(obiektKlient);
-        clearKlient();
+        //ustawKlient(imie,nazwisko,adres, telefon, id_klient);
+
+        klientDao.create(new Klient(imie, nazwisko, adres, telefon, id_klient));
+        //clearKlient();
     }
 
 
