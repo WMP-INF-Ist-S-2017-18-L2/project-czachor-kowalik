@@ -100,7 +100,7 @@ public class GlownaController {
 
     @FXML
     void addKlient(ActionEvent event) {
-        
+
     }
 
 
