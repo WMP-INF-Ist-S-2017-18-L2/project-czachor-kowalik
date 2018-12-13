@@ -99,8 +99,9 @@ public class GlownaController {
     //metody
 
     @FXML
-    void dodajKlient(ActionEvent event) {
-
+    void addKlient(ActionEvent event) {
+        
     }
+
 
 }

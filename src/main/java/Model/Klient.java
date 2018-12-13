@@ -89,9 +89,20 @@ public class Klient {
         obiektKlient.id_klient = id_klient;
     }
 
-    public void dodajKlient (String imie, String nazwisko, String adres, int telefon, int id_klient){
-        ustawKlient(imie,nazwisko,adres, telefon, id_klient);
+    public void clearKlient() {
+        obiektKlient.imie = "";
+        obiektKlient.nazwisko = "";
+        obiektKlient.adres = "";
+        obiektKlient.telefon = 0;
+        obiektKlient.id_klient = 0;
+    }
 
+
+    public void dodajKlient(String imie, String nazwisko, String adres, int telefon, int id_klient) throws SQLException {
+
+        ustawKlient(imie,nazwisko,adres, telefon, id_klient);
+        klientDao.create(obiektKlient);
+        clearKlient();
     }
 
 

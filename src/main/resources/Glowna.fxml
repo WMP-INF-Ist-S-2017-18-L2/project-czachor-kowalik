@@ -15,7 +15,7 @@
                             <children>
                                 <TabPane layoutY="-4.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-0.0">
                                     <tabs>
-                                        <Tab text="Model.Klient">
+                                        <Tab text="Klient">
                                             <content>
                                                 <AnchorPane>
                                                     <children>
@@ -247,7 +247,7 @@
                                                 </AnchorPane>
                                             </content>
                                         </Tab>
-                                        <Tab text="Model.Usterka">
+                                        <Tab text="Usterka">
                                             <content>
                                                 <AnchorPane>
                                                     <children>
