@@ -1,6 +1,7 @@
 package Controllers;
 
 import Model.Klient;
+import Model.Samochod;
 import Utils.DbManager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,7 +15,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class GlownaController implements Initializable {
+public class GlownaController<tempK> implements Initializable {
 
     @FXML
     private MenuItem status_wtrakcie;
@@ -103,6 +104,8 @@ public class GlownaController implements Initializable {
     @FXML
     private TextField txt_imie;
 
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -111,14 +114,26 @@ public class GlownaController implements Initializable {
             public void handle(ActionEvent event) {
                 try {
                     Klient k = new Klient();
-                    k.dodajKlient("Adam", "Nowak", "Kopisto", 1111, 88);
+                    k.dodajKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
 
             }
-        });
+        })
+        ;
 
+        but_dodaj_auto.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    Samochod s = new Samochod();
+                    s.dodajSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
     }

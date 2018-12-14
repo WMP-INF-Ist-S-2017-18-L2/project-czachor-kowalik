@@ -11,7 +11,7 @@ import java.util.Date;
 import static Utils.DbManager.getConnectSource;
 
 
-@DatabaseTable(tableName = "Model.Usterka")
+@DatabaseTable(tableName = "Usterka")
 public class Usterka {
 
     @DatabaseField(canBeNull = false )

@@ -72,7 +72,7 @@ public class Klient {
     }
 
 
-    public Klient() throws SQLException {
+    public Klient() {
 
 
     }
@@ -88,39 +88,23 @@ public class Klient {
     }
 
 
-    //Klient obiektKlient = new Klient();
 
-    public void ustawKlient(String imie, String nazwisko, String adres, int telefon, int id_klient){
+    public Klient(String imie, String nazwisko, String adres, int telefon) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.adres = adres;
         this.telefon = telefon;
-        this.id_klient = id_klient;
+
     }
 
-    public void clearKlient() {
-        this.imie = "";
-        this.nazwisko = "";
-        this.adres = "";
-        this.telefon = 0;
-        this.id_klient = 0;
+    public void dodajKlient(String imie, String nazwisko, String adres, int telefon) throws SQLException {
+
+        klientDao.createOrUpdate(new Klient(imie, nazwisko, adres, telefon));
+
     }
 
-    public Klient(String imie, String nazwisko, String adres, int telefon, int id_klient) {
-        this.imie = imie;
-        this.nazwisko = nazwisko;
-        this.adres = adres;
-        this.telefon = telefon;
-        this.id_klient = id_klient;
-    }
 
-    public void dodajKlient(String imie, String nazwisko, String adres, int telefon, int id_klient) throws SQLException {
 
-        //ustawKlient(imie,nazwisko,adres, telefon, id_klient);
-
-        klientDao.create(new Klient(imie, nazwisko, adres, telefon, id_klient));
-        //clearKlient();
-    }
 
 
 }

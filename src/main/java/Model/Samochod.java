@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 import static Utils.DbManager.getConnectSource;
 
-@DatabaseTable(tableName = "Model.Samochod")
+@DatabaseTable(tableName = "Samochod")
 public class Samochod {
 
     @DatabaseField(canBeNull = false)
@@ -30,7 +30,7 @@ public class Samochod {
     @DatabaseField(canBeNull = false, generatedId = true, unique = true)
     private int id_sam;
 
-    @DatabaseField(canBeNull = false, foreign = true)
+    @DatabaseField(canBeNull = true, foreign = true)
     private Klient id_klient;
 
 
@@ -90,10 +90,38 @@ public class Samochod {
         this.id_klient = id_klient;
     }
 
-    public Samochod() throws SQLException {
+    public Samochod() {
 
     }
 
-    Dao<Samochod, Integer> samochodDao =
-            DaoManager.createDao(getConnectSource(), Samochod.class);
+    Dao<Samochod, Integer> samochodDao;
+
+    {
+        try {
+            samochodDao = DaoManager.createDao(getConnectSource(), Samochod.class);
+        } catch (SQLException e) {e.printStackTrace();
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public Samochod(String marka, String model, int rok, int cc, int moc) {
+        this.marka = marka;
+        this.model = model;
+        this.rok = rok;
+        this.cc = cc;
+        this.moc = moc;
+    }
+
+
+
+    public void dodajSamochod(String marka, String model, int rok, int cc, int moc) throws SQLException {
+
+        samochodDao.createOrUpdate(new Samochod(marka, model, rok, cc, moc));
+
+    }
+
+
+
 }

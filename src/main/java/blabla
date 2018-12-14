@@ -4,17 +4,12 @@ Okna:
 -Error(Zły format)
 
 Do zmiany:
--połączyć id
 -dodać status do usterki
 -zmienić gui
---hbox, vbox
---id
 --reszta okien
 
 
 klasy:
-db manager
-obiekty
 -pobieranie danych
 -uaktualnianie danych
 -tworzenie obiektu
