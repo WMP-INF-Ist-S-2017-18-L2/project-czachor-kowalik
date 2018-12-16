@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
-<AnchorPane id="AnchorPane" prefHeight="578.0" prefWidth="763.0" xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/8" fx:controller="Controllers.ZgloszenieController">
+
+<AnchorPane id="AnchorPane" prefHeight="578.0" prefWidth="763.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ZgloszenieController">
    <children>
-       <Text layoutX="25.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Model.Klient"
-             wrappingWidth="555.13671875">
+       <Text layoutX="25.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Klient" wrappingWidth="555.13671875">
          <font>
             <Font size="18.0" />
          </font>
@@ -18,8 +18,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-       <Text layoutX="25.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Model.Usterka"
-             wrappingWidth="724.8798828125">
+       <Text layoutX="25.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Usterka" wrappingWidth="724.8798828125">
          <font>
             <Font size="18.0" />
          </font>
