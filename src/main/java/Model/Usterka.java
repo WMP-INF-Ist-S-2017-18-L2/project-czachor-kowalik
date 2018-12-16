@@ -1,5 +1,6 @@
 package Model;
 
+import Utils.Status;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
@@ -15,19 +16,19 @@ import static Utils.DbManager.getConnectSource;
 public class Usterka {
 
     @DatabaseField(canBeNull = false )
-    private Date data;
+    private String data;
 
     @DatabaseField(canBeNull = false)
     private String nazwa;
 
     @DatabaseField(canBeNull = false)
-    private Date odbior;
+    private String odbior;
 
     @DatabaseField(canBeNull = false)
     private int wycena;
 
     @DatabaseField()
-    private String opis;
+    private String opisUsterka;
 
     @DatabaseField(canBeNull = false, generatedId = true, unique = true)
     private int id_usterki;
@@ -35,11 +36,33 @@ public class Usterka {
     @DatabaseField(canBeNull = false, foreign = true)
     private Samochod id_sam;
 
-    public Date getData() {
+    @DatabaseField(canBeNull = false)
+    private Status status;
+
+    @DatabaseField
+    private String opisNaprawy;
+
+    public String getOpisNaprawy() {
+        return opisNaprawy;
+    }
+
+    public void setOpisNaprawy(String opisNaprawy) {
+        this.opisNaprawy = opisNaprawy;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
@@ -51,11 +74,11 @@ public class Usterka {
         this.nazwa = nazwa;
     }
 
-    public Date getOdbior() {
+    public String getOdbior() {
         return odbior;
     }
 
-    public void setOdbior(Date odbior) {
+    public void setOdbior(String odbior) {
         this.odbior = odbior;
     }
 
@@ -67,12 +90,12 @@ public class Usterka {
         this.wycena = wycena;
     }
 
-    public String getOpis() {
-        return opis;
+    public String getopisUsterka() {
+        return opisUsterka;
     }
 
-    public void setOpis(String opis) {
-        this.opis = opis;
+    public void setopisUsterka(String opisUsterka) {
+        this.opisUsterka = opisUsterka;
     }
 
     public int getId_usterki() {
@@ -95,6 +118,36 @@ public class Usterka {
 
     }
 
-    Dao<Usterka, Integer> usterkaDao =
-            DaoManager.createDao(getConnectSource(), Usterka.class);
+    Dao<Usterka, Integer> usterkaDao;
+
+
+    {
+        try {
+            usterkaDao = DaoManager.createDao(getConnectSource(), Usterka.class);
+        } catch (SQLException e) {e.printStackTrace();
+            e.printStackTrace();
+        }
+    }
+
+
+    public Usterka(String data, String nazwa, String odbior, int wycena, String opisUsterka) {
+        this.data = data;
+        this.nazwa = nazwa;
+        this.odbior = odbior;
+        this.wycena = wycena;
+        this.opisUsterka = opisUsterka;
+    }
+
+
+
+
+
+    public void dodajUsterka(String data, String nazwa, String odbior, int wycena, String opisUsterka) throws SQLException {
+
+        usterkaDao.createOrUpdate(new Usterka(data, nazwa, odbior, wycena ,opisUsterka));
+
+    }
+
+
+
 }
