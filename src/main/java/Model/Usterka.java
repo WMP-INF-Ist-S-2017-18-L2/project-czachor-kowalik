@@ -1,13 +1,11 @@
 package Model;
 
-import Utils.Status;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.SQLException;
-import java.util.Date;
 
 import static Utils.DbManager.getConnectSource;
 
@@ -33,11 +31,11 @@ public class Usterka {
     @DatabaseField(canBeNull = false, generatedId = true, unique = true)
     private int id_usterki;
 
-    @DatabaseField(canBeNull = false, foreign = true)
+    @DatabaseField(canBeNull = true, foreign = true)
     private Samochod id_sam;
 
     @DatabaseField(canBeNull = false)
-    private Status status;
+    private int status;
 
     @DatabaseField
     private String opisNaprawy;
@@ -50,11 +48,11 @@ public class Usterka {
         this.opisNaprawy = opisNaprawy;
     }
 
-    public Status getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
