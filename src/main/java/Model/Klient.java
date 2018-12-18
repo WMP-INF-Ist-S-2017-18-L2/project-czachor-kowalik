@@ -77,7 +77,7 @@ public class Klient {
 
     }
 
-    Dao<Klient, Integer> klientDao;
+   public Dao<Klient, Integer> klientDao;
 
     {
         try {
@@ -103,8 +103,15 @@ public class Klient {
 
     }
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "Klient{" +
+                "imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", adres='" + adres + '\'' +
+                ", telefon=" + telefon +
+                ", id_klient=" + id_klient +
+                ", klientDao=" + klientDao +
+                '}';
+    }
 }

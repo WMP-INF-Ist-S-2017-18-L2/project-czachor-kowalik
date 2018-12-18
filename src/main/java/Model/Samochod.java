@@ -30,7 +30,7 @@ public class Samochod {
     @DatabaseField(canBeNull = false, generatedId = true, unique = true)
     private int id_sam;
 
-    @DatabaseField(canBeNull = true, foreign = true)
+    @DatabaseField(canBeNull = false, foreign = true)
     private Klient id_klient;
 
 
@@ -106,19 +106,20 @@ public class Samochod {
 
 
 
-    public Samochod(String marka, String model, int rok, int cc, int moc) {
+    public Samochod(String marka, String model, int rok, int cc, int moc, Klient id_klient) {
         this.marka = marka;
         this.model = model;
         this.rok = rok;
         this.cc = cc;
         this.moc = moc;
+        this.id_klient = id_klient;
     }
 
 
 
-    public void dodajSamochod(String marka, String model, int rok, int cc, int moc) throws SQLException {
+    public void dodajSamochod(String marka, String model, int rok, int cc, int moc, Klient id_klient) throws SQLException {
 
-        samochodDao.createOrUpdate(new Samochod(marka, model, rok, cc, moc));
+        samochodDao.createOrUpdate(new Samochod(marka, model, rok, cc, moc, id_klient));
 
     }
 

@@ -122,13 +122,17 @@ public class GlownaController implements Initializable {
             }
         })
         ;
+        Klient klient = new Klient("kutas", "ziom", "dhe", 456);
+        klient.setId_klient(1);
+        Klient dupa = new Klient("dupas", "ziom", "dhe", 456);
+        dupa.setId_klient(2);
 
         but_dodaj_auto.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {
                     Samochod s = new Samochod();
-                    s.dodajSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()));
+                    s.dodajSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()), dupa);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
