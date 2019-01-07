@@ -67,8 +67,8 @@ public class DbManager {
 
     public static void initDatabase() {
         createConnect();
-//        dropTable();
-//        createTable();
+        dropTable();
+        createTable();
         closeConnect();
     }
 

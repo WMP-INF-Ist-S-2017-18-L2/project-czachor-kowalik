@@ -14,10 +14,10 @@ import static Utils.DbManager.getConnectSource;
 public class Samochod {
 
     @DatabaseField(canBeNull = false)
-    private String marka;
+    public String marka;
 
     @DatabaseField(canBeNull = false)
-    private String model;
+    public String model;
 
     @DatabaseField(canBeNull = false)
     private int rok;

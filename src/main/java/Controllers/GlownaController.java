@@ -146,6 +146,7 @@ public class GlownaController implements Initializable {
         Usterka usterka = new Usterka("01.01.2000", "nazwa", "01.01.2000", 100, "opisdlugi", samochod, 1);
         Klient.ListRefreshKlient(lista_klient);
         Samochod.ListRefreshSamochod(lista_auta);
+        Usterka.ListRefreshUsterka(lista_usterka);
 
 
         but_dodaj_klient.setOnAction(new EventHandler<ActionEvent>() {
@@ -210,6 +211,12 @@ public class GlownaController implements Initializable {
                 try {
                     Usterka u = new Usterka();
                     u.dodajUsterka(txt_datzgloszenia.getText(), txt_usterka.getText(), txt_datodbior.getText(), Integer.parseInt(txt_wycena.getText()), txt_opis.getText(), samochod, 1);
+                    Usterka.ListRefreshUsterka(lista_usterka);
+                    txt_usterka.clear();
+                    txt_datodbior.clear();
+                    txt_datzgloszenia.clear();
+                    txt_wycena.clear();
+                    txt_opis.clear();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

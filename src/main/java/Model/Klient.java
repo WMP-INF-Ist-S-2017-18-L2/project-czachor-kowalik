@@ -102,6 +102,11 @@ public class Klient {
 
     }
 
+    @Override
+    public String toString() {
+        return  imie +" "+ nazwisko + ", " + adres + ", tel: " + telefon;
+    }
+
     public void dodajKlient(String imie, String nazwisko, String adres, int telefon) throws SQLException {
 
         klientDao.createOrUpdate(new Klient(imie, nazwisko, adres, telefon));
@@ -114,10 +119,16 @@ public class Klient {
 
     }
 
-    @Override
-    public String toString() {
-        return  imie +" "+ nazwisko + ", " + adres + ", tel: " + telefon;
+    public void edytujKlient(ListView<Klient> lista) throws SQLException {
+
+        klientDao.delete(lista.getSelectionModel().getSelectedItem());
+
     }
+
+
+
+
+
 
     public static void ListRefreshKlient(ListView<Klient> lista) {
         try {

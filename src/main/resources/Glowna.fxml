@@ -52,9 +52,9 @@
                                                                         <Insets left="10.0" right="5.0" />
                                                                     </padding>
                                                                 </VBox>
-                                                                <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                                <VBox prefHeight="200.0">
                                                                     <children>
-                                                                        <TextField fx:id="txt_imie" minWidth="250.0" VBox.vgrow="ALWAYS">
+                                                                        <TextField fx:id="txt_imie" minWidth="250.0">
                                                                             <VBox.margin>
                                                                                 <Insets top="10.0" />
                                                                             </VBox.margin>
@@ -102,7 +102,7 @@
                                                                         <Insets bottom="20.0" top="20.0" />
                                                                     </HBox.margin>
                                                                 </VBox>
-                                                                <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                                <VBox HBox.hgrow="ALWAYS">
                                                                     <children>
                                                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wyszukaj w liście:" textAlignment="RIGHT">
                                                                             <VBox.margin>
@@ -114,7 +114,7 @@
                                                                         </Text>
                                                       <HBox prefHeight="100.0" prefWidth="200.0">
                                                          <children>
-                                                            <TextField fx:id="txt_szukaj_klient">
+                                                            <TextField fx:id="txt_szukaj_klient" HBox.hgrow="ALWAYS">
                                                                <HBox.margin>
                                                                   <Insets right="5.0" />
                                                                </HBox.margin></TextField>
@@ -125,14 +125,17 @@
                                                             </Button>
                                                             <Button fx:id="but_wszystkie_klient" mnemonicParsing="false" text="Pokaż wszystkie" />
                                                          </children>
+                                                         <VBox.margin>
+                                                            <Insets />
+                                                         </VBox.margin>
                                                       </HBox>
                                                                         <ListView fx:id="lista_klient" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="400.0" VBox.vgrow="ALWAYS">
                                                                             <VBox.margin>
                                                                                 <Insets bottom="20.0" top="6.0" />
                                                                             </VBox.margin>
-                                                                            <padding>
-                                                                                <Insets bottom="20.0" top="10.0" />
-                                                                            </padding>
+                                                         <padding>
+                                                            <Insets top="10.0" />
+                                                         </padding>
                                                                         </ListView>
                                                                     </children>
                                                                     <padding>
@@ -189,7 +192,7 @@
                                                                         <Insets left="10.0" right="5.0" />
                                                                     </padding>
                                                                 </VBox>
-                                                                <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                                                <VBox>
                                                                     <children>
                                                                         <TextField fx:id="txt_marka" minWidth="250.0">
                                                                             <VBox.margin>
@@ -249,7 +252,7 @@
                                                                         </Text>
                                                       <HBox prefHeight="100.0" prefWidth="200.0">
                                                          <children>
-                                                            <TextField fx:id="txt_szukaj_auto">
+                                                            <TextField fx:id="txt_szukaj_auto" HBox.hgrow="ALWAYS">
                                                                <HBox.margin>
                                                                   <Insets right="5.0" />
                                                                </HBox.margin></TextField>
@@ -288,7 +291,7 @@
                                                     <children>
                                                         <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <children>
-                                                <VBox prefHeight="200.0" prefWidth="100.0">
+                                                <VBox prefHeight="600.0" prefWidth="351.0">
                                                    <children>
                                                       <HBox prefHeight="100.0" prefWidth="200.0">
                                                          <children>
@@ -319,7 +322,7 @@
                                                                                     <Insets bottom="20.0" top="20.0" />
                                                                                 </HBox.margin>
                                                                                 <padding>
-                                                                                    <Insets left="10.0" right="5.0" />
+                                                                                    <Insets left="5.0" right="5.0" />
                                                                                 </padding>
                                                                             </VBox>
                                                                             <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
@@ -349,19 +352,19 @@
                                                                                     <Insets bottom="20.0" top="20.0" />
                                                                                 </HBox.margin>
                                                                                 <padding>
-                                                                                    <Insets left="5.0" right="5.0" />
+                                                                                    <Insets right="2.0" />
                                                                                 </padding>
                                                                             </VBox>
                                                          </children>
                                                       </HBox>
                                                                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wstępny opis usterki:">
                                                                             <VBox.margin>
-                                                                                <Insets bottom="3.0" left="10.0" />
+                                                                                <Insets bottom="3.0" left="5.0" />
                                                                             </VBox.margin>
                                                                         </Text>
                                                                         <TextArea fx:id="txt_opis" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="200.0" VBox.vgrow="ALWAYS">
                                                                             <VBox.margin>
-                                                                                <Insets bottom="20.0" left="10.0" right="5.0" />
+                                                                                <Insets left="5.0" right="2.0" />
                                                                             </VBox.margin>
                                                          <padding>
                                                             <Insets bottom="20.0" />
@@ -371,30 +374,36 @@
                                                                             <children>
                                                                                 <Button fx:id="but_dodaj_usterka" mnemonicParsing="false" text="Dodaj">
                                                                                     <HBox.margin>
-                                                                                        <Insets left="10.0" right="5.0" />
+                                                                                        <Insets left="5.0" right="5.0" />
                                                                                     </HBox.margin>
                                                                                 </Button>
                                                             <Button fx:id="but_edytuj_usterka" mnemonicParsing="false" text="Edytuj">
                                                                <HBox.margin>
                                                                   <Insets right="5.0" />
                                                                </HBox.margin></Button>
-                                                            <Button fx:id="but_edytuj_usterka" layoutX="58.0" layoutY="15.0" mnemonicParsing="false" text="Usuń" />
+                                                            <Button fx:id="but_usun_usterka" layoutX="58.0" layoutY="15.0" mnemonicParsing="false" text="Usuń" />
                                                                             </children>
                                                                             <padding>
                                                                                 <Insets top="5.0" />
                                                                             </padding>
                                                                         </HBox>
                                                    </children>
+                                                   <padding>
+                                                      <Insets left="5.0" />
+                                                   </padding>
+                                                   <HBox.margin>
+                                                      <Insets right="3.0" />
+                                                   </HBox.margin>
                                                 </VBox>
                                                                 <VBox HBox.hgrow="ALWAYS">
                                                                     <HBox.margin>
                                                                         <Insets bottom="20.0" top="10.0" />
                                                                     </HBox.margin>
                                                                     <padding>
-                                                                        <Insets left="5.0" right="10.0" />
+                                                                        <Insets left="5.0" right="5.0" />
                                                                     </padding>
                                                    <children>
-                                                      <VBox>
+                                                      <VBox VBox.vgrow="ALWAYS">
                                                          <children>
                                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wyszukaj w liście:">
                                                                <VBox.margin>
@@ -403,7 +412,7 @@
                                                             </Text>
                                                             <HBox prefHeight="100.0" prefWidth="200.0">
                                                                <children>
-                                                                  <TextField fx:id="txt_szukaj_usterka">
+                                                                  <TextField fx:id="txt_szukaj_usterka" HBox.hgrow="ALWAYS">
                                                                      <HBox.margin>
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin></TextField>
@@ -411,20 +420,33 @@
                                                                      <HBox.margin>
                                                                         <Insets right="5.0" />
                                                                      </HBox.margin></Button>
-                                                                  <Button fx:id="but_wszystkie_usterka" mnemonicParsing="false" text="Pokaż wszystkie" />
+                                                                  <Button fx:id="but_wszystkie_usterka" mnemonicParsing="false" text="Pokaż wszystkie">
+                                                                     <HBox.margin>
+                                                                        <Insets />
+                                                                     </HBox.margin>
+                                                                  </Button>
                                                                </children>
+                                                               <VBox.margin>
+                                                                  <Insets />
+                                                               </VBox.margin>
                                                             </HBox>
                                                             <ListView fx:id="lista_usterka" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="400.0" VBox.vgrow="ALWAYS">
                                                                <padding>
-                                                                  <Insets bottom="20.0" />
+                                                                  <Insets bottom="20.0" top="6.0" />
                                                                </padding>
                                                                <VBox.margin>
                                                                   <Insets bottom="20.0" top="6.0" />
                                                                </VBox.margin>
+                                                               <opaqueInsets>
+                                                                  <Insets />
+                                                               </opaqueInsets>
                                                             </ListView>
                                                          </children>
+                                                         <VBox.margin>
+                                                            <Insets />
+                                                         </VBox.margin>
                                                          <padding>
-                                                            <Insets left="5.0" right="10.0" />
+                                                            <Insets right="5.0" />
                                                          </padding>
                                                       </VBox>
                                                    </children>

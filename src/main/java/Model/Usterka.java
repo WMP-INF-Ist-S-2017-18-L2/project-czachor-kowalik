@@ -41,6 +41,8 @@ public class Usterka {
     @DatabaseField
     private String opisNaprawy;
 
+
+
     public String getOpisNaprawy() {
         return opisNaprawy;
     }
@@ -113,11 +115,11 @@ public class Usterka {
         this.id_sam = id_sam;
     }
 
-    public Usterka() throws SQLException {
+    public Usterka() {
 
     }
 
-    static Dao<Usterka, Integer> usterkaDao;
+    public static Dao<Usterka, Integer> usterkaDao;
 
 
     {
@@ -139,7 +141,10 @@ public class Usterka {
         this.status = status;
     }
 
-
+    @Override
+    public String toString() {
+        return  nazwa + ";  od " + data + " do " + odbior;
+    }
 
 
 
@@ -154,6 +159,7 @@ public class Usterka {
         usterkaDao.delete(lista.getSelectionModel().getSelectedItem());
 
     }
+
 
     public static void ListRefreshUsterka(ListView<Usterka> lista) {
         try {
