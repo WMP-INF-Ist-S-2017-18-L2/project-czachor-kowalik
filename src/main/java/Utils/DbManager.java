@@ -11,6 +11,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DbManager {
 
@@ -66,10 +67,12 @@ public class DbManager {
 
     public static void initDatabase() {
         createConnect();
-        dropTable();
-        createTable();
+//        dropTable();
+//        createTable();
         closeConnect();
     }
+
+
 
 
 }

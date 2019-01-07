@@ -31,7 +31,7 @@ public class Usterka {
     @DatabaseField(canBeNull = false, generatedId = true, unique = true)
     private int id_usterki;
 
-    @DatabaseField(canBeNull = true, foreign = true)
+    @DatabaseField(canBeNull = false, foreign = true)
     private Samochod id_sam;
 
     @DatabaseField(canBeNull = false)
@@ -128,21 +128,23 @@ public class Usterka {
     }
 
 
-    public Usterka(String data, String nazwa, String odbior, int wycena, String opisUsterka) {
+    public Usterka(String data, String nazwa, String odbior, int wycena, String opisUsterka, Samochod id_sam, int status) {
         this.data = data;
         this.nazwa = nazwa;
         this.odbior = odbior;
         this.wycena = wycena;
         this.opisUsterka = opisUsterka;
+        this.id_sam = id_sam;
+        this.status = status;
     }
 
 
 
 
 
-    public void dodajUsterka(String data, String nazwa, String odbior, int wycena, String opisUsterka) throws SQLException {
+    public void dodajUsterka(String data, String nazwa, String odbior, int wycena, String opisUsterka, Samochod id_sam, int status) throws SQLException {
 
-        usterkaDao.createOrUpdate(new Usterka(data, nazwa, odbior, wycena ,opisUsterka));
+        usterkaDao.createOrUpdate(new Usterka(data, nazwa, odbior, wycena ,opisUsterka, id_sam, status));
 
     }
 

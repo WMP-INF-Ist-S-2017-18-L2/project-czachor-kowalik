@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import javafx.scene.control.ListView;
 
 import java.sql.SQLException;
 
@@ -94,7 +95,7 @@ public class Samochod {
 
     }
 
-    Dao<Samochod, Integer> samochodDao;
+    static Dao<Samochod, Integer> samochodDao;
 
     {
         try {
@@ -123,6 +124,21 @@ public class Samochod {
 
     }
 
+    @Override
+    public String toString() {
+        return  marka +" "+ model + "   rok: " + rok + "r, cc: " + cc + ", moc: " + moc +"KM;";
+    }
+
+    public static void ListRefreshSamochod(ListView<Samochod> lista) {
+        try {
+            lista.getItems().clear();
+            lista.getItems().addAll(samochodDao.queryForAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
 
 }

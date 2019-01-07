@@ -29,7 +29,7 @@ public class GlownaController implements Initializable {
     private MenuItem status_wszystkie;
 
     @FXML
-    private ListView<Klient> lista_klient;
+    public ListView<Klient> lista_klient;
 
     @FXML
     private Button but_dodaj_usterka;
@@ -83,7 +83,7 @@ public class GlownaController implements Initializable {
     private TextField txt_model;
 
     @FXML
-    private ListView<?> lista_auta;
+    private ListView<Samochod> lista_auta;
 
     @FXML
     private TextField txt_tel;
@@ -106,18 +106,53 @@ public class GlownaController implements Initializable {
     @FXML
     private TextField txt_imie;
 
+    @FXML
+    private Tab tabKlient;
+
+    @FXML
+    private Tab tabUsterka;
+
+    @FXML
+    private Tab tabSamochod;
+
+    @FXML
+    private TabPane tabPane;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Klient klient = new Klient("imie", "nazwisko", "adres", 123456789);
+        Samochod samochod = new Samochod("marka", "model", 2000, 2000, 100, klient);
+        Usterka usterka = new Usterka("01.01.2000", "nazwa", "01.01.2000", 100, "opisdlugi", samochod, 1);
+        Klient.ListRefreshKlient(lista_klient);
+        Samochod.ListRefreshSamochod(lista_auta);
+
 
         but_dodaj_klient.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {
+                    if(!txt_imie.getText().isEmpty() && !txt_nazwisko.getText().isEmpty() && !txt_adres.getText().isEmpty() && !txt_tel.getText().isEmpty()){
                     Klient k = new Klient();
-                    k.dodajKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()));
-                    lista_klient.getItems().add(new Klient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText())));
+                    if(txt_tel.getText().matches("[0-9]*") && txt_tel.getText().length() == 9) {
+                        k.dodajKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()));
+                        Klient.ListRefreshKlient(lista_klient);
+                        txt_imie.clear();
+                        txt_nazwisko.clear();
+                        txt_adres.clear();
+                        txt_tel.clear();
+                    }
+                    else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setContentText("Nieprawidłowy numer telefonu!");
+                    alert.show();
+                    }}
+                    else{
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setContentText("Niewypełniłeś wszystkich pól!");
+                        alert.show();
 
+                    }
 
 
                 } catch (SQLException e) {
@@ -129,7 +164,6 @@ public class GlownaController implements Initializable {
             }
         })
         ;
-        Klient klient = new Klient("imie", "nazwisko", "adres", 123456789);
 
 
         but_dodaj_auto.setOnAction(new EventHandler<ActionEvent>() {
@@ -138,6 +172,12 @@ public class GlownaController implements Initializable {
                 try {
                     Samochod s = new Samochod();
                     s.dodajSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()), klient);
+                    txt_marka.clear();
+                    txt_model.clear();
+                    txt_rok.clear();
+                    txt_moc.clear();
+                    txt_cc.clear();
+                    Samochod.ListRefreshSamochod(lista_auta);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -149,7 +189,7 @@ public class GlownaController implements Initializable {
             public void handle(ActionEvent event) {
                 try {
                     Usterka u = new Usterka();
-                    u.dodajUsterka(txt_datzgloszenia.getText(), txt_usterka.getText(), txt_datodbior.getText(), Integer.parseInt(txt_wycena.getText()), txt_opis.getText());
+                    u.dodajUsterka(txt_datzgloszenia.getText(), txt_usterka.getText(), txt_datodbior.getText(), Integer.parseInt(txt_wycena.getText()), txt_opis.getText(), samochod, 1);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -157,20 +197,26 @@ public class GlownaController implements Initializable {
         });
 
 
-
-        lista_klient.setOnMouseClicked((MouseEvent event) -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-                if(lista_klient.getSelectionModel().getSelectedItem() != null){
+        lista_klient.setOnMouseClicked((MouseEvent eventklient) -> {
+            if (eventklient.getButton().equals(MouseButton.PRIMARY) && eventklient.getClickCount() == 2) {
+                if (lista_klient.getSelectionModel().getSelectedItem() != null) {
                     klient.setId_klient(lista_klient.getSelectionModel().getSelectedItem().getId_klient());
+                    tabPane.getSelectionModel().select(tabSamochod);
+
+                }
+            }
+        });
+
+        lista_auta.setOnMouseClicked((MouseEvent eventauto) -> {
+            if (eventauto.getButton().equals(MouseButton.PRIMARY) && eventauto.getClickCount() == 2) {
+                if (lista_auta.getSelectionModel().getSelectedItem() != null) {
+                    samochod.setId_klient(lista_auta.getSelectionModel().getSelectedItem().getId_klient());
+                    tabPane.getSelectionModel().select(tabUsterka);
+
                 }
             }
         });
 
 
 
-
-
-    }
-
-
-}
+    }}
