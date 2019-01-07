@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import javafx.scene.control.ListView;
 
 import java.sql.SQLException;
 
@@ -116,7 +117,7 @@ public class Usterka {
 
     }
 
-    Dao<Usterka, Integer> usterkaDao;
+    static Dao<Usterka, Integer> usterkaDao;
 
 
     {
@@ -145,6 +146,23 @@ public class Usterka {
     public void dodajUsterka(String data, String nazwa, String odbior, int wycena, String opisUsterka, Samochod id_sam, int status) throws SQLException {
 
         usterkaDao.createOrUpdate(new Usterka(data, nazwa, odbior, wycena ,opisUsterka, id_sam, status));
+
+    }
+
+    public void usunUsterka(ListView<Usterka> lista) throws SQLException {
+
+        usterkaDao.delete(lista.getSelectionModel().getSelectedItem());
+
+    }
+
+    public static void ListRefreshUsterka(ListView<Usterka> lista) {
+        try {
+            lista.getItems().clear();
+            lista.getItems().addAll(usterkaDao.queryForAll());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

@@ -124,6 +124,12 @@ public class Samochod {
 
     }
 
+    public void usunSamochod(ListView<Samochod> lista) throws SQLException {
+
+        samochodDao.delete(lista.getSelectionModel().getSelectedItem());
+
+    }
+
     @Override
     public String toString() {
         return  marka +" "+ model + "   rok: " + rok + "r, cc: " + cc + ", moc: " + moc +"KM;";

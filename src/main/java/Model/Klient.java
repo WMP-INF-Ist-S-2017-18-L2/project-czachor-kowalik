@@ -108,6 +108,12 @@ public class Klient {
 
     }
 
+    public void usunKlient(ListView<Klient> lista) throws SQLException {
+
+        klientDao.delete(lista.getSelectionModel().getSelectedItem());
+
+    }
+
     @Override
     public String toString() {
         return  imie +" "+ nazwisko + ", " + adres + ", tel: " + telefon;

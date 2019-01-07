@@ -20,22 +20,19 @@ import java.util.ResourceBundle;
 public class GlownaController implements Initializable {
 
     @FXML
-    private MenuItem status_wtrakcie;
+    private Button but_wszystkie_usterka;
 
     @FXML
-    private TextField txt_szukanie;
+    private Button but_szukaj_klient;
 
     @FXML
-    private MenuItem status_wszystkie;
+    private ListView<Klient> lista_klient;
 
     @FXML
-    public ListView<Klient> lista_klient;
+    private Button but_usun_auto;
 
     @FXML
     private Button but_dodaj_usterka;
-
-    @FXML
-    private Button but_odswiez_auto;
 
     @FXML
     private TextField txt_marka;
@@ -47,10 +44,13 @@ public class GlownaController implements Initializable {
     private TextField txt_cc;
 
     @FXML
-    private ListView<?> lista_szukanie;
+    private TextField txt_szukaj_auto;
 
     @FXML
-    private Button but_odswiez_usterka;
+    private TextField txt_szukaj_klient;
+
+    @FXML
+    private Button but_usun_klient;
 
     @FXML
     private TextField txt_datzgloszenia;
@@ -62,22 +62,34 @@ public class GlownaController implements Initializable {
     private Button but_dodaj_auto;
 
     @FXML
-    private Text txt_id_usterki;
+    private Button but_edytuj_auto;
 
     @FXML
     private TextField txt_rok;
 
     @FXML
+    private Button but_wszystkie_klient;
+
+    @FXML
     private TextField txt_wycena;
+
+    @FXML
+    private Button but_edytuj_usterka;
 
     @FXML
     private TextField txt_usterka;
 
     @FXML
-    private TextField txt_nazwisko;
+    private Button but_szukaj_usterka;
 
     @FXML
-    private MenuItem status_odebrane;
+    private Button but_szukaj_auto;
+
+    @FXML
+    private Button but_wszystkie_auto;
+
+    @FXML
+    private TextField txt_nazwisko;
 
     @FXML
     private TextField txt_model;
@@ -89,24 +101,6 @@ public class GlownaController implements Initializable {
     private TextField txt_tel;
 
     @FXML
-    private MenuItem status_doodbioru;
-
-    @FXML
-    private TextArea txt_opis;
-
-    @FXML
-    private Button but_dodaj_klient;
-
-    @FXML
-    private Button but_odswiez_klient;
-
-    @FXML
-    private TextField txt_datodbior;
-
-    @FXML
-    private TextField txt_imie;
-
-    @FXML
     private Tab tabKlient;
 
     @FXML
@@ -116,7 +110,33 @@ public class GlownaController implements Initializable {
     private Tab tabSamochod;
 
     @FXML
+    private TextArea txt_opis;
+
+    @FXML
+    private ListView<Usterka> lista_usterka;
+
+    @FXML
+    private Button but_dodaj_klient;
+
+    @FXML
+    private TextField txt_szukaj_usterka;
+
+    @FXML
+    private TextField txt_datodbior;
+
+    @FXML
+    private Button but_edytuj_klient;
+
+    @FXML
+    private TextField txt_imie;
+
+    @FXML
     private TabPane tabPane;
+
+    @FXML
+    private Button but_usun_usterka;
+
+
 
 
     @Override
@@ -195,6 +215,47 @@ public class GlownaController implements Initializable {
                 }
             }
         });
+
+        but_usun_klient.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    Klient k = new Klient();
+                    k.usunKlient(lista_klient);
+                    Klient.ListRefreshKlient(lista_klient);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        but_usun_auto.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    Samochod s = new Samochod();
+                    s.usunSamochod(lista_auta);
+                    Samochod.ListRefreshSamochod(lista_auta);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        but_usun_usterka.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    Usterka u = new Usterka();
+                    u.usunUsterka(lista_usterka);
+                    Usterka.ListRefreshUsterka(lista_usterka);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
 
 
         lista_klient.setOnMouseClicked((MouseEvent eventklient) -> {
