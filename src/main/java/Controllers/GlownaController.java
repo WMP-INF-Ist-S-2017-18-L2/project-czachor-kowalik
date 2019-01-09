@@ -162,10 +162,7 @@ public class GlownaController implements Initializable {
                         if (txt_tel.getText().matches("[0-9]*") && txt_tel.getText().length() == 9) {
                             k.dodajKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()));
                             Klient.ListRefreshKlient(lista_klient);
-                            txt_imie.clear();
-                            txt_nazwisko.clear();
-                            txt_adres.clear();
-                            txt_tel.clear();
+                            klientclear();
                         } else {
                             Alert alert = new Alert(Alert.AlertType.WARNING);
                             alert.setContentText("Nieprawidłowy numer telefonu!");
@@ -195,11 +192,7 @@ public class GlownaController implements Initializable {
                 try {
                     Samochod s = new Samochod();
                     s.dodajSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()), klient);
-                    txt_marka.clear();
-                    txt_model.clear();
-                    txt_rok.clear();
-                    txt_moc.clear();
-                    txt_cc.clear();
+                    samochodclear();
                     Samochod.ListRefreshSamochod(lista_auta);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -214,11 +207,7 @@ public class GlownaController implements Initializable {
                     Usterka u = new Usterka();
                     u.dodajUsterka(txt_datzgloszenia.getText(), txt_usterka.getText(), txt_datodbior.getText(), Integer.parseInt(txt_wycena.getText()), txt_opis.getText(), samochod, 1);
                     Usterka.ListRefreshUsterka(lista_usterka);
-                    txt_usterka.clear();
-                    txt_datodbior.clear();
-                    txt_datzgloszenia.clear();
-                    txt_wycena.clear();
-                    txt_opis.clear();
+                    usterkaclear();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -245,6 +234,7 @@ public class GlownaController implements Initializable {
                     Samochod s = new Samochod();
                     s.usunSamochod(lista_auta);
                     Samochod.ListRefreshSamochod(lista_auta);
+                    klientclear();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -280,20 +270,25 @@ public class GlownaController implements Initializable {
                     txt_tel.setText(Integer.toString(k.getTelefon()));
                     but_edytuj_klient.setText("Zapisz");
                     status = true;
+                    but_dodaj_klient.setVisible(false);
+                    but_usun_klient.setVisible(false);
+
                 } else {
-
-                    but_edytuj_klient.setText("Edytuj");
-                    status = false;
                     try {
-                        temp.usunKlient(lista_klient);
-                        k.dodajKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()));
-
+//                        temp.usunKlient(lista_klient);
+//                        k.dodajKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()));
+                        k.edytujKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()), k);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
                     klientclear();
+                    but_dodaj_klient.setVisible(true);
+                    but_usun_klient.setVisible(true);
+                    but_edytuj_klient.setText("Edytuj");
+                    status = false;
                     Klient.ListRefreshKlient(lista_klient);
                 }
+
 
             }
         });

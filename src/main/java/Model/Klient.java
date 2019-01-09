@@ -5,9 +5,13 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.PreparedUpdate;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import javafx.scene.control.ListView;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +131,17 @@ public class Klient {
 
         klientDao.delete(lista.getSelectionModel().getSelectedItem());
 
+    }
+
+    public void edytujKlient(String imie, String nazwisko, String adres, int telefon, Klient klient) throws SQLException {
+        UpdateBuilder<Klient, Integer> Update = klientDao.updateBuilder();
+        Update.updateColumnValue("imie", imie);
+        Update.updateColumnValue("nazwisko", nazwisko);
+        Update.updateColumnValue("adres", adres);
+        Update.updateColumnValue("telefon", telefon);
+        Update.where().eq("id_klient", klient.getId_klient());
+        int edit = Update.update();
+//        klientDao.update();
     }
 
 

@@ -6,10 +6,13 @@ import Model.Usterka;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.logger.Logger;
 import com.j256.ormlite.logger.LoggerFactory;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class DbManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(DbManager.class);
 
     private static ConnectionSource connectSource;
+
+//    Connection conn = DriverManager.
 
     private static void createConnect() {
         try {
@@ -71,6 +76,9 @@ public class DbManager {
 //        createTable();
         closeConnect();
     }
+
+
+
 
 
 
