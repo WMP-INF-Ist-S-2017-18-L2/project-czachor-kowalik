@@ -76,6 +76,16 @@ public class Klient {
         this.id_klient = id_klient;
     }
 
+//    public void dubleKlient(Klient klientWzór, Klient klientKopia) {
+//        klientKopia.setId_klient(klientWzór.getId_klient());
+//        klientKopia.setAdres(klientWzór.getAdres());
+//        klientKopia.setImie(klientWzór.getImie());
+//        klientKopia.setNazwisko(klientWzór.getNazwisko());
+//        klientKopia.setTelefon(klientWzór.getTelefon());
+//    }
+
+
+
 
     public Klient() {
 
@@ -119,11 +129,8 @@ public class Klient {
 
     }
 
-    public void edytujKlient(ListView<Klient> lista) throws SQLException {
 
-        klientDao.delete(lista.getSelectionModel().getSelectedItem());
 
-    }
 
 
 
@@ -137,9 +144,10 @@ public class Klient {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
+
+
+
 
     }
 

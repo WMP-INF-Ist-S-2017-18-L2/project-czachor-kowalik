@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -26,7 +27,7 @@ public class GlownaController implements Initializable {
     private Button but_szukaj_klient;
 
     @FXML
-    private ListView<Klient> lista_klient;
+    public ListView<Klient> lista_klient;
 
     @FXML
     private Button but_usun_auto;
@@ -95,7 +96,7 @@ public class GlownaController implements Initializable {
     private TextField txt_model;
 
     @FXML
-    private ListView<Samochod> lista_auta;
+    public ListView<Samochod> lista_auta;
 
     @FXML
     private TextField txt_tel;
@@ -113,7 +114,7 @@ public class GlownaController implements Initializable {
     private TextArea txt_opis;
 
     @FXML
-    private ListView<Usterka> lista_usterka;
+    public ListView<Usterka> lista_usterka;
 
     @FXML
     private Button but_dodaj_klient;
@@ -137,6 +138,8 @@ public class GlownaController implements Initializable {
     private Button but_usun_usterka;
 
 
+    boolean status = false;
+
 
 
     @Override
@@ -149,26 +152,26 @@ public class GlownaController implements Initializable {
         Usterka.ListRefreshUsterka(lista_usterka);
 
 
+
         but_dodaj_klient.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    if(!txt_imie.getText().isEmpty() && !txt_nazwisko.getText().isEmpty() && !txt_adres.getText().isEmpty() && !txt_tel.getText().isEmpty()){
-                    Klient k = new Klient();
-                    if(txt_tel.getText().matches("[0-9]*") && txt_tel.getText().length() == 9) {
-                        k.dodajKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()));
-                        Klient.ListRefreshKlient(lista_klient);
-                        txt_imie.clear();
-                        txt_nazwisko.clear();
-                        txt_adres.clear();
-                        txt_tel.clear();
-                    }
-                    else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setContentText("Nieprawidłowy numer telefonu!");
-                    alert.show();
-                    }}
-                    else{
+                    if (!txt_imie.getText().isEmpty() && !txt_nazwisko.getText().isEmpty() && !txt_adres.getText().isEmpty() && !txt_tel.getText().isEmpty()) {
+                        Klient k = new Klient();
+                        if (txt_tel.getText().matches("[0-9]*") && txt_tel.getText().length() == 9) {
+                            k.dodajKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()));
+                            Klient.ListRefreshKlient(lista_klient);
+                            txt_imie.clear();
+                            txt_nazwisko.clear();
+                            txt_adres.clear();
+                            txt_tel.clear();
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setContentText("Nieprawidłowy numer telefonu!");
+                            alert.show();
+                        }
+                    } else {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setContentText("Niewypełniłeś wszystkich pól!");
                         alert.show();
@@ -183,8 +186,7 @@ public class GlownaController implements Initializable {
 
 
             }
-        })
-        ;
+        });
 
 
         but_dodaj_auto.setOnAction(new EventHandler<ActionEvent>() {
@@ -263,6 +265,38 @@ public class GlownaController implements Initializable {
         });
 
 
+        but_edytuj_klient.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                Klient k,temp  = new Klient();
+                k = lista_klient.getSelectionModel().getSelectedItem();
+                temp = lista_klient.getSelectionModel().getSelectedItem();
+                if (status == false) {
+
+                    txt_imie.setText(k.getImie());
+                    txt_nazwisko.setText(k.getNazwisko());
+                    txt_adres.setText(k.getAdres());
+                    txt_tel.setText(Integer.toString(k.getTelefon()));
+                    but_edytuj_klient.setText("Zapisz");
+                    status = true;
+                } else {
+
+                    but_edytuj_klient.setText("Edytuj");
+                    status = false;
+                    try {
+                        temp.usunKlient(lista_klient);
+                        k.dodajKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()));
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    klientclear();
+                    Klient.ListRefreshKlient(lista_klient);
+                }
+
+            }
+        });
 
 
         lista_klient.setOnMouseClicked((MouseEvent eventklient) -> {
@@ -278,13 +312,39 @@ public class GlownaController implements Initializable {
         lista_auta.setOnMouseClicked((MouseEvent eventauto) -> {
             if (eventauto.getButton().equals(MouseButton.PRIMARY) && eventauto.getClickCount() == 2) {
                 if (lista_auta.getSelectionModel().getSelectedItem() != null) {
-                    samochod.setId_klient(lista_auta.getSelectionModel().getSelectedItem().getId_klient());
+                    samochod.setId_sam(lista_auta.getSelectionModel().getSelectedItem().getId_sam());
                     tabPane.getSelectionModel().select(tabUsterka);
 
                 }
             }
         });
 
+        //lista_usterka wywołanie
 
 
-    }}
+    }
+
+    private void klientclear(){
+        txt_imie.clear();
+        txt_nazwisko.clear();
+        txt_adres.clear();
+        txt_tel.clear();
+    }
+
+    private void samochodclear() {
+        txt_marka.clear();
+        txt_model.clear();
+        txt_rok.clear();
+        txt_moc.clear();
+        txt_cc.clear();
+    }
+
+    private void usterkaclear() {
+        txt_usterka.clear();
+        txt_datodbior.clear();
+        txt_datzgloszenia.clear();
+        txt_wycena.clear();
+        txt_opis.clear();
+    }
+}
+

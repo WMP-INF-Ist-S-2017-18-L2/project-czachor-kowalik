@@ -1,5 +1,6 @@
 package Model;
 
+import Controllers.GlownaController;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
@@ -159,6 +160,8 @@ public class Usterka {
         usterkaDao.delete(lista.getSelectionModel().getSelectedItem());
 
     }
+
+
 
 
     public static void ListRefreshUsterka(ListView<Usterka> lista) {
