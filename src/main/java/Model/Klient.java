@@ -80,16 +80,6 @@ public class Klient {
         this.id_klient = id_klient;
     }
 
-//    public void dubleKlient(Klient klientWzór, Klient klientKopia) {
-//        klientKopia.setId_klient(klientWzór.getId_klient());
-//        klientKopia.setAdres(klientWzór.getAdres());
-//        klientKopia.setImie(klientWzór.getImie());
-//        klientKopia.setNazwisko(klientWzór.getNazwisko());
-//        klientKopia.setTelefon(klientWzór.getTelefon());
-//    }
-
-
-
 
     public Klient() {
 
@@ -140,8 +130,8 @@ public class Klient {
         Update.updateColumnValue("adres", adres);
         Update.updateColumnValue("telefon", telefon);
         Update.where().eq("id_klient", klient.getId_klient());
-        int edit = Update.update();
-//        klientDao.update();
+        Update.update();
+
     }
 
 

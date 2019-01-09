@@ -3,17 +3,19 @@ package Controllers;
 import Model.Klient;
 import Model.Samochod;
 import Model.Usterka;
-import Utils.DbManager;
-import com.j256.ormlite.dao.GenericRawResults;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -275,8 +277,6 @@ public class GlownaController implements Initializable {
 
                 } else {
                     try {
-//                        temp.usunKlient(lista_klient);
-//                        k.dodajKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()));
                         k.edytujKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()), k);
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -292,6 +292,11 @@ public class GlownaController implements Initializable {
 
             }
         });
+
+
+
+
+
 
 
         lista_klient.setOnMouseClicked((MouseEvent eventklient) -> {
@@ -314,7 +319,15 @@ public class GlownaController implements Initializable {
             }
         });
 
-        //lista_usterka wywołanie
+        lista_usterka.setOnMouseClicked((MouseEvent eventusterka) -> {
+            if (eventusterka.getButton().equals(MouseButton.PRIMARY) && eventusterka.getClickCount() == 2) {
+                if (lista_usterka.getSelectionModel().getSelectedItem() != null) {
+                    usterka.setId_usterki(lista_usterka.getSelectionModel().getSelectedItem().getId_usterki());
+                    openZgloszenie(usterka);
+
+                }
+            }
+        });
 
 
     }
@@ -341,5 +354,19 @@ public class GlownaController implements Initializable {
         txt_wycena.clear();
         txt_opis.clear();
     }
-}
+
+    private void openZgloszenie(Usterka usterka) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/Zgloszenie.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Szczegóły");
+            stage.setScene(new Scene(root, 850, 700));
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+}}
 
