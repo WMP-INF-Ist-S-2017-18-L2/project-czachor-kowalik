@@ -3,6 +3,7 @@ package Model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import javafx.scene.control.ListView;
 
@@ -127,6 +128,17 @@ public class Samochod {
     public void usunSamochod(ListView<Samochod> lista) throws SQLException {
 
         samochodDao.delete(lista.getSelectionModel().getSelectedItem());
+
+    }
+
+    public void edytujSamochod(String marka, String model, int rok, int cc, int moc, Samochod samochod) throws SQLException {
+        UpdateBuilder<Samochod, Integer> Update = samochodDao.updateBuilder();
+        Update.updateColumnValue("marka", marka);
+        Update.updateColumnValue("model", model);
+        Update.updateColumnValue("cc", cc);
+        Update.updateColumnValue("rok", rok);
+        Update.where().eq("id_sam", samochod.getId_sam());
+        Update.update();
 
     }
 

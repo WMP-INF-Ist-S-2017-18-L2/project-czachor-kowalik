@@ -140,7 +140,7 @@ public class GlownaController implements Initializable {
     private Button but_usun_usterka;
 
 
-    boolean status = false;
+    boolean statusK, statusS, statusU = false;
 
 
 
@@ -264,14 +264,14 @@ public class GlownaController implements Initializable {
                 Klient k,temp  = new Klient();
                 k = lista_klient.getSelectionModel().getSelectedItem();
                 temp = lista_klient.getSelectionModel().getSelectedItem();
-                if (status == false) {
+                if (statusK == false) {
 
                     txt_imie.setText(k.getImie());
                     txt_nazwisko.setText(k.getNazwisko());
                     txt_adres.setText(k.getAdres());
                     txt_tel.setText(Integer.toString(k.getTelefon()));
                     but_edytuj_klient.setText("Zapisz");
-                    status = true;
+                    statusK = true;
                     but_dodaj_klient.setVisible(false);
                     but_usun_klient.setVisible(false);
 
@@ -285,8 +285,82 @@ public class GlownaController implements Initializable {
                     but_dodaj_klient.setVisible(true);
                     but_usun_klient.setVisible(true);
                     but_edytuj_klient.setText("Edytuj");
-                    status = false;
+                    statusK = false;
                     Klient.ListRefreshKlient(lista_klient);
+                }
+
+
+            }
+        });
+
+        but_edytuj_auto.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                Samochod s,temp  = new Samochod();
+                s = lista_auta.getSelectionModel().getSelectedItem();
+                temp = lista_auta.getSelectionModel().getSelectedItem();
+                if (statusS == false) {
+
+                    txt_marka.setText(s.getMarka());
+                    txt_model.setText(s.getModel());
+                    txt_cc.setText(Integer.toString(s.getCc()));
+                    txt_rok.setText(Integer.toString(s.getRok()));
+                    txt_moc.setText(Integer.toString(s.getMoc()));
+                    but_edytuj_auto.setText("Zapisz");
+                    statusS = true;
+                    but_dodaj_auto.setVisible(false);
+                    but_usun_auto.setVisible(false);
+
+                } else {
+                    try {
+                        s.edytujSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()), s);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    samochodclear();
+                    but_dodaj_klient.setVisible(true);
+                    but_usun_auto.setVisible(true);
+                    but_edytuj_auto.setText("Edytuj");
+                    statusS = false;
+                    Samochod.ListRefreshSamochod(lista_auta);
+                }
+
+
+            }
+        });
+
+        but_edytuj_usterka.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                Usterka u,temp  = new Usterka();
+                u = lista_usterka.getSelectionModel().getSelectedItem();
+                temp = lista_usterka.getSelectionModel().getSelectedItem();
+                if (statusU == false) {
+
+                    txt_usterka.setText(u.getNazwa());
+                    txt_datzgloszenia.setText(u.getData());
+                    txt_datodbior.setText(u.getOdbior());
+                    txt_opis.setText(u.getopisUsterka());
+                    txt_wycena.setText(Integer.toString(u.getWycena()));
+                    but_edytuj_usterka.setText("Zapisz");
+                    statusU = true;
+                    but_dodaj_usterka.setVisible(false);
+                    but_usun_usterka.setVisible(false);
+
+                } else {
+                    try {
+                        u.edytujUsterka(txt_datzgloszenia.getText(), txt_usterka.getText(), txt_datodbior.getText(), Integer.parseInt(txt_wycena.getText()), txt_opis.getText(), u);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    usterkaclear();
+                    but_dodaj_usterka.setVisible(true);
+                    but_usun_usterka.setVisible(true);
+                    but_edytuj_usterka.setText("Edytuj");
+                    statusU = false;
+                    Usterka.ListRefreshUsterka(lista_usterka);
                 }
 
 
@@ -323,12 +397,11 @@ public class GlownaController implements Initializable {
             if (eventusterka.getButton().equals(MouseButton.PRIMARY) && eventusterka.getClickCount() == 2) {
                 if (lista_usterka.getSelectionModel().getSelectedItem() != null) {
                     usterka.setId_usterki(lista_usterka.getSelectionModel().getSelectedItem().getId_usterki());
-                    openZgloszenie(usterka);
+                    openZgloszenie(klient, samochod, usterka);
 
                 }
             }
         });
-
 
     }
 
@@ -355,7 +428,7 @@ public class GlownaController implements Initializable {
         txt_opis.clear();
     }
 
-    private void openZgloszenie(Usterka usterka) {
+    private void openZgloszenie(Klient klient, Samochod samochod, Usterka usterka) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/Zgloszenie.fxml"));
             Stage stage = new Stage();
@@ -366,6 +439,8 @@ public class GlownaController implements Initializable {
         catch (IOException e) {
             e.printStackTrace();
         }
+
+
 
 
 }}

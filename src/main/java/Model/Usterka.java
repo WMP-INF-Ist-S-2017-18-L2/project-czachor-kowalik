@@ -4,6 +4,7 @@ import Controllers.GlownaController;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import javafx.scene.control.ListView;
 
@@ -144,7 +145,7 @@ public class Usterka {
 
     @Override
     public String toString() {
-        return  nazwa + ";  od " + data + " do " + odbior;
+        return  nazwa + ";  od " + data + " do " + odbior + "; wycena: " + wycena;
     }
 
 
@@ -161,7 +162,18 @@ public class Usterka {
 
     }
 
+    public void edytujUsterka(String data, String nazwa, String odbior, int wycena, String opisUsterka, Usterka usterka) throws SQLException {
+        UpdateBuilder<Usterka, Integer> Update = usterkaDao.updateBuilder();
+        Update.updateColumnValue("data", data);
+        Update.updateColumnValue("nazwa", nazwa);
+        Update.updateColumnValue("odbior", odbior);
+        Update.updateColumnValue("opisUsterka", opisUsterka);
+        Update.updateColumnValue("status", status);
+        Update.updateColumnValue("wycena", wycena);
+        Update.where().eq("id_usterki", usterka.getId_usterki());
+        Update.update();
 
+    }
 
 
     public static void ListRefreshUsterka(ListView<Usterka> lista) {
