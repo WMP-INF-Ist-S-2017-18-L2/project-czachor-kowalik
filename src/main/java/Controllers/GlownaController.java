@@ -143,12 +143,45 @@ public class GlownaController implements Initializable {
     boolean statusK, statusS, statusU = false;
 
 
+    public Klient klient = new Klient("imie", "nazwisko", "adres", 123456789);
+
+    public static Klient getKlient() {
+        Klient A = new Klient();
+        return A;
+    }
+
+    ///// Koniec INITIALIZE
+
+    private void klientclear() {
+        txt_imie.clear();
+        txt_nazwisko.clear();
+        txt_adres.clear();
+        txt_tel.clear();
+    }
+
+    private void samochodclear() {
+        txt_marka.clear();
+        txt_model.clear();
+        txt_rok.clear();
+        txt_moc.clear();
+        txt_cc.clear();
+    }
+
+    private void usterkaclear() {
+        txt_usterka.clear();
+        txt_datodbior.clear();
+        txt_datzgloszenia.clear();
+        txt_wycena.clear();
+        txt_opis.clear();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Klient klient = new Klient("imie", "nazwisko", "adres", 123456789);
+
+
         Samochod samochod = new Samochod("marka", "model", 2000, 2000, 100, klient);
         Usterka usterka = new Usterka("01.01.2000", "nazwa", "01.01.2000", 100, "opisdlugi", samochod, 1);
+
         Klient.ListRefreshKlient(lista_klient);
         Samochod.ListRefreshSamochod(lista_auta);
         Usterka.ListRefreshUsterka(lista_usterka);
@@ -187,7 +220,6 @@ public class GlownaController implements Initializable {
             }
         });
 
-
         but_dodaj_auto.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -215,6 +247,7 @@ public class GlownaController implements Initializable {
                 }
             }
         });
+
 
         but_usun_klient.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -370,9 +403,6 @@ public class GlownaController implements Initializable {
 
 
 
-
-
-
         lista_klient.setOnMouseClicked((MouseEvent eventklient) -> {
             if (eventklient.getButton().equals(MouseButton.PRIMARY) && eventklient.getClickCount() == 2) {
                 if (lista_klient.getSelectionModel().getSelectedItem() != null) {
@@ -397,7 +427,7 @@ public class GlownaController implements Initializable {
             if (eventusterka.getButton().equals(MouseButton.PRIMARY) && eventusterka.getClickCount() == 2) {
                 if (lista_usterka.getSelectionModel().getSelectedItem() != null) {
                     usterka.setId_usterki(lista_usterka.getSelectionModel().getSelectedItem().getId_usterki());
-                    openZgloszenie(klient, samochod, usterka);
+                    openZgloszenie();
 
                 }
             }
@@ -405,43 +435,28 @@ public class GlownaController implements Initializable {
 
     }
 
-    private void klientclear(){
-        txt_imie.clear();
-        txt_nazwisko.clear();
-        txt_adres.clear();
-        txt_tel.clear();
-    }
-
-    private void samochodclear() {
-        txt_marka.clear();
-        txt_model.clear();
-        txt_rok.clear();
-        txt_moc.clear();
-        txt_cc.clear();
-    }
-
-    private void usterkaclear() {
-        txt_usterka.clear();
-        txt_datodbior.clear();
-        txt_datzgloszenia.clear();
-        txt_wycena.clear();
-        txt_opis.clear();
-    }
-
-    private void openZgloszenie(Klient klient, Samochod samochod, Usterka usterka) {
+    private void openZgloszenie() {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/Zgloszenie.fxml"));
             Stage stage = new Stage();
             stage.setTitle("Szczegóły");
-            stage.setScene(new Scene(root, 850, 700));
+            stage.setScene(new Scene(root, 800, 500));
+            stage.setResizable(false);
             stage.show();
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+//
+//    public Samochod getSamochod() {
+//        Samochod B = samochod;
+//        return B;
+//    };
+//
+//    public Usterka getUsterka() {
+//        Usterka C = usterka;
+//        return C;
+//    };
 
-
-
-
-}}
-
+}
