@@ -104,6 +104,8 @@ public class Klient {
         return  imie +" "+ nazwisko + ", " + adres + ", tel: " + telefon;
     }
 
+    public String szukajString() { return imie+nazwisko+adres+telefon;  }
+
     public void dodajKlient(String imie, String nazwisko, String adres, int telefon) throws SQLException {
 
         klientDao.createOrUpdate(new Klient(imie, nazwisko, adres, telefon));
@@ -129,9 +131,13 @@ public class Klient {
 
 
 
+    public void szukaj(ListView<Klient> lista, String tekst) throws SQLException {
+//        QueryBuilder<Klient, Integer> query = klientDao.queryBuilder();
+//        query.where()
 
 
 
+    }
 
 
 

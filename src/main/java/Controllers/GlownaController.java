@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GlownaController implements Initializable {
@@ -142,15 +143,9 @@ public class GlownaController implements Initializable {
 
     boolean statusK, statusS, statusU = false;
 
-
-    public Klient klient = new Klient("imie", "nazwisko", "adres", 123456789);
-
-    public static Klient getKlient() {
-        Klient A = new Klient();
-        return A;
-    }
-
-    ///// Koniec INITIALIZE
+    public static Klient openK = new Klient("imie", "nazwisko", "adres", 123456789);
+    public static Samochod openS = new Samochod("marka", "model", 2000, 2000, 100, openK);
+    public static Usterka openU = new Usterka("01.01.2000", "nazwa", "01.01.2000", 100, "opisdlugi", openS, 1);
 
     private void klientclear() {
         txt_imie.clear();
@@ -158,7 +153,6 @@ public class GlownaController implements Initializable {
         txt_adres.clear();
         txt_tel.clear();
     }
-
     private void samochodclear() {
         txt_marka.clear();
         txt_model.clear();
@@ -166,7 +160,6 @@ public class GlownaController implements Initializable {
         txt_moc.clear();
         txt_cc.clear();
     }
-
     private void usterkaclear() {
         txt_usterka.clear();
         txt_datodbior.clear();
@@ -178,13 +171,16 @@ public class GlownaController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
+        Klient klient = new Klient("imie", "nazwisko", "adres", 123456789);
         Samochod samochod = new Samochod("marka", "model", 2000, 2000, 100, klient);
         Usterka usterka = new Usterka("01.01.2000", "nazwa", "01.01.2000", 100, "opisdlugi", samochod, 1);
 
         Klient.ListRefreshKlient(lista_klient);
         Samochod.ListRefreshSamochod(lista_auta);
         Usterka.ListRefreshUsterka(lista_usterka);
+
+        ArrayList<Klient> szukajListK = new ArrayList();
+        ArrayList<Klient> wynikListK = new ArrayList();
 
 
 
@@ -401,11 +397,10 @@ public class GlownaController implements Initializable {
         });
 
 
-
-
         lista_klient.setOnMouseClicked((MouseEvent eventklient) -> {
             if (eventklient.getButton().equals(MouseButton.PRIMARY) && eventklient.getClickCount() == 2) {
                 if (lista_klient.getSelectionModel().getSelectedItem() != null) {
+                    openK = lista_klient.getSelectionModel().getSelectedItem();
                     klient.setId_klient(lista_klient.getSelectionModel().getSelectedItem().getId_klient());
                     tabPane.getSelectionModel().select(tabSamochod);
 
@@ -416,7 +411,8 @@ public class GlownaController implements Initializable {
         lista_auta.setOnMouseClicked((MouseEvent eventauto) -> {
             if (eventauto.getButton().equals(MouseButton.PRIMARY) && eventauto.getClickCount() == 2) {
                 if (lista_auta.getSelectionModel().getSelectedItem() != null) {
-                    samochod.setId_sam(lista_auta.getSelectionModel().getSelectedItem().getId_sam());
+                    openS = lista_auta.getSelectionModel().getSelectedItem();
+                    samochod.setId_klient(lista_auta.getSelectionModel().getSelectedItem().getId_klient());
                     tabPane.getSelectionModel().select(tabUsterka);
 
                 }
@@ -426,12 +422,54 @@ public class GlownaController implements Initializable {
         lista_usterka.setOnMouseClicked((MouseEvent eventusterka) -> {
             if (eventusterka.getButton().equals(MouseButton.PRIMARY) && eventusterka.getClickCount() == 2) {
                 if (lista_usterka.getSelectionModel().getSelectedItem() != null) {
+                    openU = lista_usterka.getSelectionModel().getSelectedItem();
                     usterka.setId_usterki(lista_usterka.getSelectionModel().getSelectedItem().getId_usterki());
                     openZgloszenie();
 
                 }
             }
         });
+
+
+        but_szukaj_klient.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Klient.ListRefreshKlient(lista_klient);
+                int i;
+//                txt_szukaj_klient.setText(Integer.toString(lista_klient.getItems().size()));
+                for (i=0; i<lista_klient.getItems().lastIndexOf(lista_klient); i++) {
+                    if (!lista_klient.getItems().get(i).szukajString().equals(txt_szukaj_klient.getText())) {
+                       lista_klient.getItems().remove(i);
+                    } }
+            }
+        });
+
+
+        but_wszystkie_klient.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Klient.ListRefreshKlient(lista_klient);
+                txt_szukaj_klient.clear();
+            }
+        });
+
+        but_wszystkie_auto.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Samochod.ListRefreshSamochod(lista_auta);
+                txt_szukaj_auto.clear();
+            }
+        });
+
+        but_wszystkie_usterka.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               Usterka.ListRefreshUsterka(lista_usterka);
+               txt_szukaj_usterka.clear();
+            }
+        });
+
+
 
     }
 
@@ -443,20 +481,14 @@ public class GlownaController implements Initializable {
             stage.setScene(new Scene(root, 800, 500));
             stage.setResizable(false);
             stage.show();
+
+            stage.setOnCloseRequest(event -> {
+                Usterka.ListRefreshUsterka(lista_usterka);
+            });
         }
         catch (IOException e) {
             e.printStackTrace();
         }
     }
-//
-//    public Samochod getSamochod() {
-//        Samochod B = samochod;
-//        return B;
-//    };
-//
-//    public Usterka getUsterka() {
-//        Usterka C = usterka;
-//        return C;
-//    };
 
 }

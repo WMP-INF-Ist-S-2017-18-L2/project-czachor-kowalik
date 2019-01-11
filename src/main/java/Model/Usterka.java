@@ -1,6 +1,5 @@
 package Model;
 
-import Controllers.GlownaController;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
@@ -162,8 +161,9 @@ public class Usterka {
 
     }
 
+    UpdateBuilder<Usterka, Integer> Update = usterkaDao.updateBuilder();
+
     public void edytujUsterka(String data, String nazwa, String odbior, int wycena, String opisUsterka, Usterka usterka) throws SQLException {
-        UpdateBuilder<Usterka, Integer> Update = usterkaDao.updateBuilder();
         Update.updateColumnValue("data", data);
         Update.updateColumnValue("nazwa", nazwa);
         Update.updateColumnValue("odbior", odbior);
@@ -173,6 +173,14 @@ public class Usterka {
         Update.where().eq("id_usterki", usterka.getId_usterki());
         Update.update();
 
+    }
+
+    public void zapiszZmiany(String opisNaprawy, int koszt, int status, int id) throws SQLException {
+        if(opisNaprawy!=null) {Update.updateColumnValue("opisNaprawy" , opisNaprawy);}
+        if(status!=0) {Update.updateColumnValue("status" , status);}
+        if(koszt!=0) Update.updateColumnValue("wycena" , koszt);
+        Update.where().eq("id_usterki", id);
+        Update.update();
     }
 
 
