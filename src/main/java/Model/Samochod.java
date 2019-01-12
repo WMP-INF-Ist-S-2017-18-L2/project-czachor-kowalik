@@ -3,11 +3,14 @@ package Model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import javafx.scene.control.ListView;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import static Utils.DbManager.getConnectSource;
 
@@ -140,6 +143,15 @@ public class Samochod {
         Update.where().eq("id_sam", samochod.getId_sam());
         Update.update();
 
+    }
+
+    public static void zakresS(ListView<Klient> listaK, ListView<Samochod> listaS) throws SQLException {
+        QueryBuilder<Samochod, Integer> zakres = samochodDao.queryBuilder();
+        zakres.where().eq("id_klient_id", listaK.getSelectionModel().getSelectedItem().getId_klient());
+        PreparedQuery<Samochod> prepare = zakres.prepare();
+        List<Samochod> lista = Samochod.samochodDao.query(prepare);
+        listaS.getItems().clear();
+        listaS.getItems().addAll(lista);
     }
 
     @Override

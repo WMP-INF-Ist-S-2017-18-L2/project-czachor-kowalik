@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class GlownaController implements Initializable {
@@ -179,8 +180,14 @@ public class GlownaController implements Initializable {
         Samochod.ListRefreshSamochod(lista_auta);
         Usterka.ListRefreshUsterka(lista_usterka);
 
-        ArrayList<Klient> szukajListK = new ArrayList();
-        ArrayList<Klient> wynikListK = new ArrayList();
+        List<Klient> szukajListK = new ArrayList();
+        List<Klient> wynikListK = new ArrayList();
+
+        List<Samochod> szukajListS = new ArrayList();
+        List<Samochod> wynikListS = new ArrayList();
+
+        List<Usterka> szukajListU = new ArrayList();
+        List<Usterka> wynikListU = new ArrayList();
 
 
 
@@ -403,6 +410,11 @@ public class GlownaController implements Initializable {
                     openK = lista_klient.getSelectionModel().getSelectedItem();
                     klient.setId_klient(lista_klient.getSelectionModel().getSelectedItem().getId_klient());
                     tabPane.getSelectionModel().select(tabSamochod);
+                    try {
+                        Samochod.zakresS(lista_klient, lista_auta);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }
@@ -414,6 +426,11 @@ public class GlownaController implements Initializable {
                     openS = lista_auta.getSelectionModel().getSelectedItem();
                     samochod.setId_klient(lista_auta.getSelectionModel().getSelectedItem().getId_klient());
                     tabPane.getSelectionModel().select(tabUsterka);
+                    try {
+                        Usterka.zakresU(lista_auta, lista_usterka);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             }
@@ -435,12 +452,56 @@ public class GlownaController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 Klient.ListRefreshKlient(lista_klient);
-                int i;
-//                txt_szukaj_klient.setText(Integer.toString(lista_klient.getItems().size()));
-                for (i=0; i<lista_klient.getItems().lastIndexOf(lista_klient); i++) {
-                    if (!lista_klient.getItems().get(i).szukajString().equals(txt_szukaj_klient.getText())) {
-                       lista_klient.getItems().remove(i);
-                    } }
+                szukajListK.clear();
+                wynikListK.clear();
+                szukajListK.addAll(lista_klient.getItems());
+                String tekst = txt_szukaj_klient.getText().toLowerCase();
+                int a = szukajListK.size();
+                for (int i = 0; i < a; i++) {
+                    if (szukajListK.get(i).toString().toLowerCase().contains(tekst)) {
+                        wynikListK.add(szukajListK.get(i));
+                    }
+                }
+                lista_klient.getItems().clear();
+                lista_klient.getItems().addAll(wynikListK);
+            }
+        });
+
+        but_szukaj_auto.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Samochod.ListRefreshSamochod(lista_auta);
+                szukajListS.clear();
+                wynikListS.clear();
+                szukajListS.addAll(lista_auta.getItems());
+                String tekst = txt_szukaj_auto.getText().toLowerCase();
+                int a = szukajListS.size();
+                for (int i = 0; i < a; i++) {
+                    if (szukajListS.get(i).toString().toLowerCase().contains(tekst)) {
+                        wynikListS.add(szukajListS.get(i));
+                    }
+                }
+                lista_auta.getItems().clear();
+                lista_auta.getItems().addAll(wynikListS);
+            }
+        });
+
+        but_szukaj_usterka.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Usterka.ListRefreshUsterka(lista_usterka);
+                szukajListU.clear();
+                wynikListU.clear();
+                szukajListU.addAll(lista_usterka.getItems());
+                String tekst = txt_szukaj_usterka.getText().toLowerCase();
+                int a = szukajListU.size();
+                for (int i = 0; i < a; i++) {
+                    if (szukajListU.get(i).toString().toLowerCase().contains(tekst)) {
+                        wynikListU.add(szukajListU.get(i));
+                    }
+                }
+                lista_usterka.getItems().clear();
+                lista_usterka.getItems().addAll(wynikListU);
             }
         });
 

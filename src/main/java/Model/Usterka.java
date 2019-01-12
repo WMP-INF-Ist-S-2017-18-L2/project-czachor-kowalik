@@ -3,11 +3,14 @@ package Model;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.DatabaseTable;
 import javafx.scene.control.ListView;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import static Utils.DbManager.getConnectSource;
 
@@ -181,6 +184,15 @@ public class Usterka {
         if(koszt!=0) Update.updateColumnValue("wycena" , koszt);
         Update.where().eq("id_usterki", id);
         Update.update();
+    }
+
+    public static void zakresU(ListView<Samochod> listaS, ListView<Usterka> listaU) throws SQLException {
+        QueryBuilder<Usterka, Integer> zakres = usterkaDao.queryBuilder();
+        zakres.where().eq("id_sam_id", listaS.getSelectionModel().getSelectedItem().getId_sam());
+        PreparedQuery<Usterka> prepare = zakres.prepare();
+        List<Usterka> lista = Usterka.usterkaDao.query(prepare);
+        listaU.getItems().clear();
+        listaU.getItems().addAll(lista);
     }
 
 

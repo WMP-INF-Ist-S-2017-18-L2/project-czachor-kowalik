@@ -79,7 +79,7 @@ public class Klient {
 
     }
 
-   public static Dao<Klient, Integer> klientDao;
+    public static Dao<Klient, Integer> klientDao;
 
     {
         try {
@@ -128,18 +128,6 @@ public class Klient {
         Update.update();
 
     }
-
-
-
-    public void szukaj(ListView<Klient> lista, String tekst) throws SQLException {
-//        QueryBuilder<Klient, Integer> query = klientDao.queryBuilder();
-//        query.where()
-
-
-
-    }
-
-
 
     public static void ListRefreshKlient(ListView<Klient> lista) {
         try {
