@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0"
+            xmlns="http://javafx.com/javafx/8" fx:controller="Controllers.Zgloszenie">
+   <children>
+       <VBox maxHeight="800.0" maxWidth="800.0" minHeight="800.0" minWidth="800.0" AnchorPane.bottomAnchor="0.0"
+             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox>
+               <children>
+                   <VBox>
+                     <children>
+                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Klient:" wrappingWidth="51.13671875"
+                               VBox.vgrow="ALWAYS">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                             <VBox.margin>
+                                 <Insets/>
+                             </VBox.margin>
+                        </Text>
+                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Samochód:" wrappingWidth="94.13671875">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Usterka:" wrappingWidth="68.8798828125">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <rotationAxis>
+                              <Point3D />
+                           </rotationAxis>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Text>
+                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Wstępny opis usterki:"
+                               wrappingWidth="170.3310546875">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                       <HBox.margin>
+                           <Insets top="10.0"/>
+                       </HBox.margin>
+                  </VBox>
+                  <VBox maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <children>
+                         <Text fx:id="txt_klient_S" strokeType="OUTSIDE" strokeWidth="0.0"
+                               text="Rafał Całka, Koluszowa Góra 213, 7911111222" wrappingWidth="599.13671875">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                         <Text fx:id="txt_auto_S" strokeType="OUTSIDE" strokeWidth="0.0"
+                               text="Daevo, Tico, 1999, 45, 600" wrappingWidth="602.3310546875">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                             <VBox.margin>
+                                 <Insets/>
+                             </VBox.margin>
+                        </Text>
+                         <Text fx:id="txt_usterka_S" strokeType="OUTSIDE" strokeWidth="0.0" text="ruda szmata"
+                               wrappingWidth="603.8798828125">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                             <VBox.margin>
+                                 <Insets/>
+                             </VBox.margin>
+                        </Text>
+                         <Text fx:id="txt_opis_S" boundsType="LOGICAL_VERTICAL_CENTER" strokeType="OUTSIDE"
+                               strokeWidth="0.0"
+                               text="no tak jak u góry, ruda szmata wszędzie, uuuuuuuu,uuuuuuuuu,uuuuuu, soł haj, soł haj, soł hajno tak jak u góry, ruda szmata wszędzie, uuuuuuuu,uuuuuuuuu,uuuuuu, soł haj, soł haj, soł hajno tak jak u góry, ruda szmata wszędzie, uuuuuuuu,uuuuuuuuu,uuuuuu, soł haj"
+                               wrappingWidth="595.8798828125">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                             <VBox.margin>
+                                 <Insets/>
+                             </VBox.margin>
+                             <rotationAxis>
+                                 <Point3D/>
+                             </rotationAxis>
+                        </Text>
+                     </children>
+                      <HBox.margin>
+                          <Insets left="5.0" top="10.0"/>
+                      </HBox.margin>
+                      <padding>
+                          <Insets left="5.0"/>
+                      </padding>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                   <Insets left="10.0" right="10.0" top="10.0"/>
+               </VBox.margin>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sprawozdanie:">
+                       <VBox.margin>
+                           <Insets bottom="6.0" left="10.0"/>
+                       </VBox.margin>
+                   </Text>
+                   <TextArea fx:id="txt_sprawozdanie_S" maxHeight="1.7976931348623157E308"
+                             maxWidth="1.7976931348623157E308" minHeight="200.0" VBox.vgrow="ALWAYS">
+                       <VBox.margin>
+                           <Insets left="10.0" right="10.0"/>
+                       </VBox.margin>
+                   </TextArea>
+               </children>
+                <VBox.margin>
+                    <Insets/>
+                </VBox.margin>
+                <padding>
+                    <Insets top="10.0"/>
+                </padding>
+            </VBox>
+             <HBox>
+               <children>
+                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cena końcowa:">
+                       <HBox.margin>
+                           <Insets right="5.0"/>
+                       </HBox.margin>
+                   </Text>
+                   <TextField fx:id="txt_koszt_S">
+                       <HBox.margin>
+                           <Insets right="10.0"/>
+                       </HBox.margin>
+                   </TextField>
+                   <MenuButton fx:id="menu_status_S" mnemonicParsing="false" text="Status">
+                    <items>
+                        <MenuItem fx:id="status_wtrakcie_S" mnemonicParsing="false" text="W trakcie"/>
+                        <MenuItem fx:id="status_doodbioru_S" mnemonicParsing="false" text="Do odbioru"/>
+                        <MenuItem fx:id="status_odebrane_S" mnemonicParsing="false" text="Odebrane"/>
+                    </items>
+                  </MenuButton>
+                   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                         minWidth="-Infinity" HBox.hgrow="ALWAYS"/>
+                   <Button fx:id="but_zapisz_S" mnemonicParsing="false" text="Zapisz">
+                       <HBox.margin>
+                           <Insets/>
+                       </HBox.margin>
+                   </Button>
+               </children>
+                 <VBox.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                 </VBox.margin>
+            </HBox>
+             <AnchorPane>
+                 <children>
+                     <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Krzysztof Czachor &amp; Kacper Kowalik"
+                           AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="2.0"/>
+                     <Line endX="820.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+                 </children>
+             </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
