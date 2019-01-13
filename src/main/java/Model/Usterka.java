@@ -186,9 +186,9 @@ public class Usterka {
         Update.update();
     }
 
-    public static void zakresU(ListView<Samochod> listaS, ListView<Usterka> listaU) throws SQLException {
+    public static void zakresU(Samochod id, ListView<Usterka> listaU) throws SQLException {
         QueryBuilder<Usterka, Integer> zakres = usterkaDao.queryBuilder();
-        zakres.where().eq("id_sam_id", listaS.getSelectionModel().getSelectedItem().getId_sam());
+        zakres.where().eq("id_sam_id", id.getId_sam());
         PreparedQuery<Usterka> prepare = zakres.prepare();
         List<Usterka> lista = Usterka.usterkaDao.query(prepare);
         listaU.getItems().clear();

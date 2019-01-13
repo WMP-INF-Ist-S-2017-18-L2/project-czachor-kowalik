@@ -145,13 +145,22 @@ public class Samochod {
 
     }
 
-    public static void zakresS(ListView<Klient> listaK, ListView<Samochod> listaS) throws SQLException {
+    public static void zakresS(Klient klient, ListView<Samochod> listaS) throws SQLException {
         QueryBuilder<Samochod, Integer> zakres = samochodDao.queryBuilder();
-        zakres.where().eq("id_klient_id", listaK.getSelectionModel().getSelectedItem().getId_klient());
+        zakres.where().eq("id_klient_id", klient.getId_klient());
         PreparedQuery<Samochod> prepare = zakres.prepare();
         List<Samochod> lista = Samochod.samochodDao.query(prepare);
         listaS.getItems().clear();
         listaS.getItems().addAll(lista);
+    }
+
+
+    public static Samochod getS(Samochod id) throws SQLException {
+        QueryBuilder<Samochod, Integer> get = samochodDao.queryBuilder();
+        get.where().eq("id_sam", id);
+        PreparedQuery<Samochod> prepare = get.prepare();
+        List<Samochod> lista = Samochod.samochodDao.query(prepare);
+        return lista.get(0);
     }
 
     @Override
