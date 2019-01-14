@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="project-czachor-kowalik" />
         <module name="Projekt" />
+        <module name="TEN" />
         <module name="Warsztat" />
       </profile>
     </annotationProcessing>

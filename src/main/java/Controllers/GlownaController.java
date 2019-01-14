@@ -234,7 +234,7 @@ public class GlownaController implements Initializable {
         but_dodaj_auto.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (openK.getId_klient() <= 0) {
+                if (klient.getId_klient() <= 0) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Nie wybrałeś klienta!");
                     alert.show();
@@ -244,7 +244,7 @@ public class GlownaController implements Initializable {
                         Samochod s = new Samochod();
                         s.dodajSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()), klient);
                         samochodclear();
-                        Samochod.zakresS(openK, lista_auta);
+                        Samochod.zakresS(klient, lista_auta);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -255,7 +255,7 @@ public class GlownaController implements Initializable {
         but_dodaj_usterka.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (openS.getId_sam() <= 0) {
+                if (samochod.getId_sam() <= 0) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText("Nie wybrałeś samochodu!");
                     alert.show();
@@ -263,7 +263,7 @@ public class GlownaController implements Initializable {
                     try {
                         Usterka u = new Usterka();
                         u.dodajUsterka(txt_datzgloszenia.getText(), txt_usterka.getText(), txt_datodbior.getText(), Integer.parseInt(txt_wycena.getText()), txt_opis.getText(), samochod, 1);
-                        Usterka.zakresU(openS, lista_usterka);
+                        Usterka.zakresU(samochod, lista_usterka);
                         usterkaclear();
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -318,9 +318,8 @@ public class GlownaController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
-                Klient k,temp  = new Klient();
+                Klient k;
                 k = lista_klient.getSelectionModel().getSelectedItem();
-                temp = lista_klient.getSelectionModel().getSelectedItem();
                 if (statusK == false) {
 
                     txt_imie.setText(k.getImie());
@@ -354,9 +353,8 @@ public class GlownaController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
-                Samochod s,temp  = new Samochod();
+                Samochod s;
                 s = lista_auta.getSelectionModel().getSelectedItem();
-                temp = lista_auta.getSelectionModel().getSelectedItem();
                 if (statusS == false) {
 
                     txt_marka.setText(s.getMarka());
@@ -391,9 +389,8 @@ public class GlownaController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
 
-                Usterka u,temp  = new Usterka();
+                Usterka u;
                 u = lista_usterka.getSelectionModel().getSelectedItem();
-                temp = lista_usterka.getSelectionModel().getSelectedItem();
                 if (statusU == false) {
 
                     txt_usterka.setText(u.getNazwa());
@@ -434,7 +431,7 @@ public class GlownaController implements Initializable {
                     zerujS();
                     zerujU();
                     try {
-                        Samochod.zakresS(lista_klient.getSelectionModel().getSelectedItem(), lista_auta);
+                        Samochod.zakresS(openK, lista_auta);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -447,11 +444,12 @@ public class GlownaController implements Initializable {
             if (eventauto.getButton().equals(MouseButton.PRIMARY) && eventauto.getClickCount() == 2) {
                 if (lista_auta.getSelectionModel().getSelectedItem() != null) {
                     openS = lista_auta.getSelectionModel().getSelectedItem();
+                    samochod.setId_sam(lista_auta.getSelectionModel().getSelectedItem().getId_sam());
                     zerujU();
-                    samochod.setId_klient(lista_auta.getSelectionModel().getSelectedItem().getId_klient());
                     tabPane.getSelectionModel().select(tabUsterka);
                     try {
                         Usterka.zakresU(openS, lista_usterka);
+                        openK = Klient.getK(openS.getId_klient().getId_klient());
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -465,11 +463,13 @@ public class GlownaController implements Initializable {
                 if (lista_usterka.getSelectionModel().getSelectedItem() != null) {
                     openU = lista_usterka.getSelectionModel().getSelectedItem();
                     try {
-                        openS = Samochod.getS(lista_usterka.getSelectionModel().getSelectedItem().getId_sam());
-                        openK = Klient.getK(lista_usterka.getSelectionModel().getSelectedItem().getId_sam().getId_klient());
+                        openS = Samochod.getS(openU.getId_sam().getId_sam());
+                        openK = Klient.getK(openS.getId_klient().getId_klient());
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
+
+
 
                     usterka.setId_usterki(lista_usterka.getSelectionModel().getSelectedItem().getId_usterki());
                     openZgloszenie();

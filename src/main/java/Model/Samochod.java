@@ -155,11 +155,11 @@ public class Samochod {
     }
 
 
-    public static Samochod getS(Samochod id) throws SQLException {
+    public static Samochod getS(int id) throws SQLException {
         QueryBuilder<Samochod, Integer> get = samochodDao.queryBuilder();
         get.where().eq("id_sam", id);
         PreparedQuery<Samochod> prepare = get.prepare();
-        List<Samochod> lista = Samochod.samochodDao.query(prepare);
+        List<Samochod> lista = samochodDao.query(prepare);
         return lista.get(0);
     }
 

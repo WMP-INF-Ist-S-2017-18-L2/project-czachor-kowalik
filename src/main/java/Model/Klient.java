@@ -132,11 +132,11 @@ public class Klient {
 
     }
 
-    public static Klient getK(Klient id) throws SQLException {
+    public static Klient getK(int id) throws SQLException {
         QueryBuilder<Klient, Integer> get = klientDao.queryBuilder();
         get.where().eq("id_klient", id);
         PreparedQuery<Klient> prepare = get.prepare();
-        List<Klient> lista = Klient.klientDao.query(prepare);
+        List<Klient> lista = klientDao.query(prepare);
         return lista.get(0);
     }
 
