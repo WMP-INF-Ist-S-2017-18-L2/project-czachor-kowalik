@@ -78,7 +78,6 @@ public class Zgloszenie implements Initializable {
         tekstStatus(menu_status_S);
 
 
-
 //
         but_zapisz_S.setOnAction(new EventHandler<ActionEvent>() {
             @Override
