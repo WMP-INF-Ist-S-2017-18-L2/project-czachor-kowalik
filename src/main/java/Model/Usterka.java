@@ -1,5 +1,6 @@
 package Model;
 
+import Controllers.GlownaController;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.field.DatabaseField;
@@ -163,6 +164,33 @@ public class Usterka {
         usterkaDao.delete(lista.getSelectionModel().getSelectedItem());
 
     }
+
+    public void usunUsterkaS(ListView<Samochod> lista) throws SQLException {
+
+        QueryBuilder<Usterka, Integer> usun = usterkaDao.queryBuilder();
+        usun.where().eq("id_sam_id", lista.getSelectionModel().getSelectedItem().getId_sam());
+        PreparedQuery<Usterka> prepare = usun.prepare();
+        List<Usterka> list = Usterka.usterkaDao.query(prepare);
+        usterkaDao.delete(list);
+    }
+
+    public void usunUsterkaK(ListView<Klient> lista, ListView<Usterka> lista2) throws SQLException {
+
+        QueryBuilder<Samochod, Integer> usun = Samochod.samochodDao.queryBuilder();
+        usun.where().eq("id_klient_id", lista.getSelectionModel().getSelectedItem().getId_klient());
+        PreparedQuery<Samochod> prepare = usun.prepare();
+        List<Samochod> list = Samochod.samochodDao.query(prepare);
+        for(int i=0; i<list.size(); i++) {
+            Samochod auto = list.get(i);
+            for(int j=0; j<lista2.getItems().size(); j++) {
+                Usterka wziu = lista2.getItems().get(j);
+                if(wziu.id_sam.getId_sam()==auto.getId_sam()) {
+                    usterkaDao.deleteById(wziu.id_usterki);
+                }
+            }
+        }
+    }
+
 
     UpdateBuilder<Usterka, Integer> Update = usterkaDao.updateBuilder();
 

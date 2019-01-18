@@ -78,20 +78,26 @@ public class Zgloszenie implements Initializable {
         tekstStatus(menu_status_S);
 
 
-//
+
         but_zapisz_S.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 usterka.setOpisNaprawy(txt_sprawozdanie_S.getText());
                 usterka.setWycena(Integer.parseInt(txt_koszt_S.getText()));
-                usterka.setStatus(status);
-                try {
-                    usterka.zapiszZmiany(txt_sprawozdanie_S.getText(), Integer.parseInt(txt_koszt_S.getText()), status, GlownaController.openU.getId_usterki());
+                usterka.setStatus(status);try {
+                    if (txt_koszt_S.getText().matches("[0-9]*")) {
+                        usterka.zapiszZmiany(txt_sprawozdanie_S.getText(), Integer.parseInt(txt_koszt_S.getText()), status, GlownaController.openU.getId_usterki());
+                        txt_usterka_S.setText(usterka.toString());
+                        GlownaController.openU = usterka;
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setContentText("Nieprawidłowa wartość ceny końcowej!");
+                        alert.show();
+                    }
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                txt_usterka_S.setText(usterka.toString());
-                GlownaController.openU = usterka;
             }
         });
 

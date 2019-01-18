@@ -133,6 +133,14 @@ public class Samochod {
         samochodDao.delete(lista.getSelectionModel().getSelectedItem());
 
     }
+    public void usunSamochodK(ListView<Klient> lista) throws SQLException {
+
+        QueryBuilder<Samochod, Integer> usun = samochodDao.queryBuilder();
+        usun.where().eq("id_klient_id", lista.getSelectionModel().getSelectedItem().getId_klient());
+        PreparedQuery<Samochod> prepare = usun.prepare();
+        List<Samochod> list = Samochod.samochodDao.query(prepare);
+        samochodDao.delete(list);
+    }
 
     public void edytujSamochod(String marka, String model, int rok, int cc, int moc, Samochod samochod) throws SQLException {
         UpdateBuilder<Samochod, Integer> Update = samochodDao.updateBuilder();

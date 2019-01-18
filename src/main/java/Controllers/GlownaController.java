@@ -14,13 +14,14 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import sun.util.calendar.BaseCalendar;
+import sun.util.calendar.LocalGregorianCalendar;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.time.LocalTime;
+import java.util.*;
 
 public class GlownaController implements Initializable {
 
@@ -197,6 +198,8 @@ public class GlownaController implements Initializable {
         List<Usterka> szukajListU = new ArrayList();
         List<Usterka> wynikListU = new ArrayList();
 
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+
 
 
         but_dodaj_klient.setOnAction(new EventHandler<ActionEvent>() {
@@ -210,12 +213,10 @@ public class GlownaController implements Initializable {
                             Klient.ListRefreshKlient(lista_klient);
                             klientclear();
                         } else {
-                            Alert alert = new Alert(Alert.AlertType.WARNING);
                             alert.setContentText("Nieprawidłowy numer telefonu!");
                             alert.show();
                         }
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setContentText("Niewypełniłeś wszystkich pól!");
                         alert.show();
 
@@ -234,20 +235,35 @@ public class GlownaController implements Initializable {
         but_dodaj_auto.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (klient.getId_klient() <= 0) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Nie wybrałeś klienta!");
-                    alert.show();
-                } else {
+                try {
+                    if (klient.getId_klient() <= 0) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setContentText("Nie wybrałeś klienta!");
+                        alert.show();
+                    } else if (!txt_marka.getText().isEmpty() && !txt_model.getText().isEmpty() && !txt_rok.getText().isEmpty() && !txt_moc.getText().isEmpty() && !txt_cc.getText().isEmpty()) {
+                        if (txt_moc.getText().matches("[0-9]*") && Integer.parseInt(txt_moc.getText())<3000 && txt_rok.getText().matches("[0-9]*") && Integer.parseInt(txt_rok.getText())>1900 && Integer.parseInt(txt_rok.getText())< 2019 && txt_cc.getText().matches("[0-9]*") && Integer.parseInt(txt_cc.getText())>400 && Integer.parseInt(txt_cc.getText())<10000) {
 
-                    try {
-                        Samochod s = new Samochod();
-                        s.dodajSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()), klient);
-                        samochodclear();
-                        Samochod.zakresS(klient, lista_auta);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                            Samochod s = new Samochod();
+                            s.dodajSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()), klient);
+                            samochodclear();
+                            Samochod.zakresS(klient, lista_auta);
+
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setContentText("(np. moc silnika, rok produkcji, pojemność silnika)");
+                            alert.setHeaderText("Nieprawidłowe wprowadzone dane! ");
+                            alert.show();
+
+                        }
+                    } else {
+
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setContentText("Niewypełniłeś wszystkich pól!");
+                        alert.show();
                     }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -261,10 +277,25 @@ public class GlownaController implements Initializable {
                     alert.show();
                 } else {
                     try {
-                        Usterka u = new Usterka();
-                        u.dodajUsterka(txt_datzgloszenia.getText(), txt_usterka.getText(), txt_datodbior.getText(), Integer.parseInt(txt_wycena.getText()), txt_opis.getText(), samochod, 1);
-                        Usterka.zakresU(samochod, lista_usterka);
-                        usterkaclear();
+                        if (!txt_datzgloszenia.getText().isEmpty() && !txt_usterka.getText().isEmpty() && !txt_datodbior.getText().isEmpty() && !txt_wycena.getText().isEmpty() && !txt_opis.getText().isEmpty()) {
+                            if (txt_wycena.getText().matches("[0-9]*") && Integer.parseInt(txt_wycena.getText())>=0) {
+                                Usterka u = new Usterka();
+                                u.dodajUsterka(txt_datzgloszenia.getText(), txt_usterka.getText(), txt_datodbior.getText(), Integer.parseInt(txt_wycena.getText()), txt_opis.getText(), samochod, 1);
+                                Usterka.zakresU(samochod, lista_usterka);
+                                usterkaclear();
+                            } else {
+                                Alert alert = new Alert(Alert.AlertType.WARNING);
+                                alert.setContentText("(np. wstępna wycena)");
+                                alert.setHeaderText("Nieprawidłowe wprowadzone dane! ");
+                                alert.show();
+                            }
+                        } else {
+
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setContentText("Niewypełniłeś wszystkich pól!");
+                            alert.show();
+                        }
+
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -274,15 +305,32 @@ public class GlownaController implements Initializable {
 
 
         but_usun_klient.setOnAction(new EventHandler<ActionEvent>() {
+
+
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    Klient k = new Klient();
-                    k.usunKlient(lista_klient);
-                    Klient.ListRefreshKlient(lista_klient);
+                    Alert alertUsunKlient = new Alert(Alert.AlertType.CONFIRMATION);
+                    alertUsunKlient.setTitle("Hey!");
+                    alertUsunKlient.setHeaderText("Na pewno usunąć wybranego klienta?");
+                    alertUsunKlient.setContentText("Usuniesz z bazy też jego auta i ich usterki.\nNA ZAWSZE!");
+
+                    Optional<ButtonType> result = alertUsunKlient.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        usterka.usunUsterkaK(lista_klient, lista_usterka);
+                        samochod.usunSamochodK(lista_klient);
+                        klient.usunKlient(lista_klient);
+                        Klient.ListRefreshKlient(lista_klient);
+                        Samochod.ListRefreshSamochod(lista_auta);
+                        Usterka.ListRefreshUsterka(lista_usterka);
+                    } else {
+                        alertUsunKlient.close();
+                    }
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+
             }
         });
 
@@ -290,10 +338,20 @@ public class GlownaController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    Samochod s = new Samochod();
-                    s.usunSamochod(lista_auta);
-                    Samochod.ListRefreshSamochod(lista_auta);
-                    klientclear();
+                    Alert alertUsunAuto = new Alert(Alert.AlertType.CONFIRMATION);
+                    alertUsunAuto.setTitle("Hey!");
+                    alertUsunAuto.setHeaderText("Na pewno usunąć wybrany samochód?");
+                    alertUsunAuto.setContentText("Usuniesz z bazy też jego usterki.\nNA ZAWSZE!");
+
+                    Optional<ButtonType> result = alertUsunAuto.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        samochod.usunSamochod(lista_auta);
+                        usterka.usunUsterkaS(lista_auta);
+                        Samochod.ListRefreshSamochod(lista_auta);
+                        Usterka.ListRefreshUsterka(lista_usterka);
+                    } else {
+                        alertUsunAuto.close();
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -304,9 +362,19 @@ public class GlownaController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    Usterka u = new Usterka();
-                    u.usunUsterka(lista_usterka);
-                    Usterka.ListRefreshUsterka(lista_usterka);
+                    Alert alertUsunUsterka = new Alert(Alert.AlertType.CONFIRMATION);
+                    alertUsunUsterka.setTitle("Hey!");
+                    alertUsunUsterka.setHeaderText("Na pewno usunąć wybraną usterkę?");
+                    alertUsunUsterka.setContentText("Stracisz ją NA ZAWSZE!");
+
+                    Optional<ButtonType> result = alertUsunUsterka.showAndWait();
+                    if (result.get() == ButtonType.OK) {
+                        Usterka u = new Usterka();
+                        u.usunUsterka(lista_usterka);
+                        Usterka.ListRefreshUsterka(lista_usterka);
+                    } else {
+                        alertUsunUsterka.close();
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -333,21 +401,30 @@ public class GlownaController implements Initializable {
 
                 } else {
                     try {
-                        k.edytujKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()), k);
+                        if (!txt_imie.getText().isEmpty() && !txt_nazwisko.getText().isEmpty() && !txt_adres.getText().isEmpty() && !txt_tel.getText().isEmpty()) {
+                            if (txt_tel.getText().matches("[0-9]*") && txt_tel.getText().length() == 9) {
+                                k.edytujKlient(txt_imie.getText(), txt_nazwisko.getText(), txt_adres.getText(), Integer.parseInt(txt_tel.getText()), k);
+                                klientclear();
+                                but_dodaj_klient.setVisible(true);
+                                but_usun_klient.setVisible(true);
+                                but_edytuj_klient.setText("Edytuj");
+                                statusK = false;
+                                Klient.ListRefreshKlient(lista_klient);
+                            } else {
+                                Alert alert = new Alert(Alert.AlertType.WARNING);
+                                alert.setContentText("Nieprawidłowy numer telefonu!");
+                                alert.show();
+                            }
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setContentText("Niewypełniłeś wszystkich pól!");
+                            alert.show();
+
+                        }
+
                     } catch (SQLException e) {
                         e.printStackTrace();
-                    }
-                    klientclear();
-                    but_dodaj_klient.setVisible(true);
-                    but_usun_klient.setVisible(true);
-                    but_edytuj_klient.setText("Edytuj");
-                    statusK = false;
-                    Klient.ListRefreshKlient(lista_klient);
-                }
-
-
-            }
-        });
+                    }}}});
 
         but_edytuj_auto.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -369,21 +446,32 @@ public class GlownaController implements Initializable {
 
                 } else {
                     try {
-                        s.edytujSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()), s);
+                        if (!txt_marka.getText().isEmpty() && !txt_model.getText().isEmpty() && !txt_rok.getText().isEmpty() && !txt_moc.getText().isEmpty() && !txt_cc.getText().isEmpty()) {
+                            if (txt_moc.getText().matches("[0-9]*") && txt_rok.getText().matches("[0-9]*") && txt_cc.getText().matches("[0-9]*")) {
+                                s.edytujSamochod(txt_marka.getText(), txt_model.getText(), Integer.parseInt(txt_rok.getText()), Integer.parseInt(txt_cc.getText()), Integer.parseInt(txt_moc.getText()), s);
+                                samochodclear();
+                                but_dodaj_auto.setVisible(true);
+                                but_usun_auto.setVisible(true);
+                                but_edytuj_auto.setText("Edytuj");
+                                statusS = false;
+                                Samochod.ListRefreshSamochod(lista_auta);
+                            } else {
+                                Alert alert = new Alert(Alert.AlertType.WARNING);
+                                alert.setContentText("(np. moc silnika, rok produkcji, pojemność silnika)");
+                                alert.setHeaderText("Nieprawidłowe wprowadzone dane! ");
+                                alert.show();
+
+                            }
+                        } else {
+
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setContentText("Niewypełniłeś wszystkich pól!");
+                            alert.show();
+                        }
+
                     } catch (SQLException e) {
                         e.printStackTrace();
-                    }
-                    samochodclear();
-                    but_dodaj_klient.setVisible(true);
-                    but_usun_auto.setVisible(true);
-                    but_edytuj_auto.setText("Edytuj");
-                    statusS = false;
-                    Samochod.ListRefreshSamochod(lista_auta);
-                }
-
-
-            }
-        });
+                    }}}});
 
         but_edytuj_usterka.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -405,21 +493,29 @@ public class GlownaController implements Initializable {
 
                 } else {
                     try {
-                        u.edytujUsterka(txt_datzgloszenia.getText(), txt_usterka.getText(), txt_datodbior.getText(), Integer.parseInt(txt_wycena.getText()), txt_opis.getText(), u);
+                        if (!txt_datzgloszenia.getText().isEmpty() && !txt_usterka.getText().isEmpty() && !txt_datodbior.getText().isEmpty() && !txt_wycena.getText().isEmpty() && !txt_opis.getText().isEmpty()) {
+                            if (txt_wycena.getText().matches("[0-9]*")) {
+                                u.edytujUsterka(txt_datzgloszenia.getText(), txt_usterka.getText(), txt_datodbior.getText(), Integer.parseInt(txt_wycena.getText()), txt_opis.getText(), u);
+                                usterkaclear();
+                                but_dodaj_usterka.setVisible(true);
+                                but_usun_usterka.setVisible(true);
+                                but_edytuj_usterka.setText("Edytuj");
+                                statusU = false;
+                                Usterka.ListRefreshUsterka(lista_usterka);
+                            } else {
+                                Alert alert = new Alert(Alert.AlertType.WARNING);
+                                alert.setContentText("(np. wstępna wycena)");
+                                alert.setHeaderText("Nieprawidłowe wprowadzone dane! ");
+                                alert.show();
+                            }
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setContentText("Niewypełniłeś wszystkich pól!");
+                            alert.show();
+                        }
                     } catch (SQLException e) {
                         e.printStackTrace();
-                    }
-                    usterkaclear();
-                    but_dodaj_usterka.setVisible(true);
-                    but_usun_usterka.setVisible(true);
-                    but_edytuj_usterka.setText("Edytuj");
-                    statusU = false;
-                    Usterka.ListRefreshUsterka(lista_usterka);
-                }
-
-
-            }
-        });
+                    }}}});
 
 
         lista_klient.setOnMouseClicked((MouseEvent eventklient) -> {
@@ -468,9 +564,6 @@ public class GlownaController implements Initializable {
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-
-
-
                     usterka.setId_usterki(lista_usterka.getSelectionModel().getSelectedItem().getId_usterki());
                     openZgloszenie();
 
